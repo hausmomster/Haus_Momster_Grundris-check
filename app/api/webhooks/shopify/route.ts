@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
+import nodemailer from 'nodemailer'
 import { supabase } from '@/lib/supabase'
-import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+})
 
 function verifyShopifyWebhook(body: string, hmac: string): boolean {
   const secret = process.env.SHOPIFY_WEBHOOK_SECRET!
@@ -38,11 +44,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'DB error' }, { status: 500 })
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? '').replace(/\/$/, '')
   const toolUrl = `${appUrl}/tool?token=${token}`
 
-  await resend.emails.send({
-    from: process.env.EMAIL_FROM!,
+  await transporter.sendMail({
+    from: `"Haus Momster" <${process.env.GMAIL_USER}>`,
     to: email,
     subject: 'Dein Grundriss-Check ist bereit ✓',
     html: `
