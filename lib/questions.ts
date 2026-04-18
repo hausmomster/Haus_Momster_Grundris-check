@@ -96,7 +96,7 @@ export const questions: Question[] = [
         points: 2,
         recommendation: {
           de: 'Plant eine Garderobennische ein – mindestens 60 cm tief und 80 cm breit. Sie ist der erste Schritt zu einem aufgeräumten Zuhause.',
-          en: 'Plan a wardrobe niche – at least 60 cm deep and 80 cm wide. It's the first step to a tidy home.',
+          en: "Plan a wardrobe niche – at least 60 cm deep and 80 cm wide. It's the first step to a tidy home.",
         },
       },
       {
