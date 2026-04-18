@@ -1,0 +1,639 @@
+export type Lang = 'de' | 'en'
+
+export type Option = {
+  value: string
+  label: Record<Lang, string>
+  points: number
+  recommendation?: Record<Lang, string>
+}
+
+export type Question = {
+  id: number
+  block: number
+  blockTitle: Record<Lang, string>
+  blockEmoji: string
+  question: Record<Lang, string>
+  type: 'single' | 'text'
+  scorable: boolean
+  options?: Option[]
+}
+
+export const questions: Question[] = [
+  // ─── BLOCK 1 – BASISINFOS (context only, no score) ───────────────────────
+  {
+    id: 1,
+    block: 1,
+    blockTitle: { de: 'Basisinfos', en: 'Basic Info' },
+    blockEmoji: '🏠',
+    question: {
+      de: 'Befindet sich dein Projekt aktuell in welcher Phase?',
+      en: 'What phase is your project currently in?',
+    },
+    type: 'single',
+    scorable: false,
+    options: [
+      { value: 'search', label: { de: 'Grundstückssuche', en: 'Looking for a plot' }, points: 0 },
+      { value: 'planning', label: { de: 'Grundriss in Planung', en: 'Floor plan in planning' }, points: 0 },
+      { value: 'permit', label: { de: 'Bauantrag läuft', en: 'Building permit in progress' }, points: 0 },
+      { value: 'construction', label: { de: 'Bau läuft bereits', en: 'Construction underway' }, points: 0 },
+      { value: 'done', label: { de: 'Haus steht schon', en: 'House already built' }, points: 0 },
+    ],
+  },
+  {
+    id: 2,
+    block: 1,
+    blockTitle: { de: 'Basisinfos', en: 'Basic Info' },
+    blockEmoji: '🏠',
+    question: {
+      de: 'Wie groß ist dein Haus / deine Wohnung?',
+      en: 'How large is your house / apartment?',
+    },
+    type: 'single',
+    scorable: false,
+    options: [
+      { value: 'small', label: { de: 'Unter 120 m²', en: 'Under 120 m²' }, points: 0 },
+      { value: 'medium', label: { de: '120–160 m²', en: '120–160 m²' }, points: 0 },
+      { value: 'large', label: { de: '160–200 m²', en: '160–200 m²' }, points: 0 },
+      { value: 'xlarge', label: { de: 'Über 200 m²', en: 'Over 200 m²' }, points: 0 },
+    ],
+  },
+  {
+    id: 3,
+    block: 1,
+    blockTitle: { de: 'Basisinfos', en: 'Basic Info' },
+    blockEmoji: '🏠',
+    question: {
+      de: 'Wie viele Personen leben dort?',
+      en: 'How many people live there?',
+    },
+    type: 'single',
+    scorable: false,
+    options: [
+      { value: '1-2', label: { de: '1–2 Personen', en: '1–2 people' }, points: 0 },
+      { value: '3', label: { de: '3 Personen', en: '3 people' }, points: 0 },
+      { value: '4', label: { de: '4 Personen', en: '4 people' }, points: 0 },
+      { value: '5+', label: { de: '5 oder mehr', en: '5 or more' }, points: 0 },
+    ],
+  },
+
+  // ─── BLOCK 2 – EINGANGSBEREICH (10 pts) ──────────────────────────────────
+  {
+    id: 4,
+    block: 2,
+    blockTitle: { de: 'Eingangsbereich', en: 'Entrance Area' },
+    blockEmoji: '🚪',
+    question: {
+      de: 'Gibt es eine Garderobennische oder Garderobenfläche?',
+      en: 'Is there a wardrobe niche or dedicated wardrobe area?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
+      {
+        value: 'planned',
+        label: { de: 'Noch nicht geplant', en: 'Not yet planned' },
+        points: 2,
+        recommendation: {
+          de: 'Plant eine Garderobennische ein – mindestens 60 cm tief und 80 cm breit. Sie ist der erste Schritt zu einem aufgeräumten Zuhause.',
+          en: 'Plan a wardrobe niche – at least 60 cm deep and 80 cm wide. It's the first step to a tidy home.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Ohne Garderobenlösung stapeln sich Jacken und Schuhe sofort im Flur. Plane mindestens eine Nische (60 cm tief, 80 cm breit) ein.',
+          en: 'Without a wardrobe solution, coats and shoes pile up in the hallway immediately. Plan at least a niche (60 cm deep, 80 cm wide).',
+        },
+      },
+    ],
+  },
+  {
+    id: 5,
+    block: 2,
+    blockTitle: { de: 'Eingangsbereich', en: 'Entrance Area' },
+    blockEmoji: '🚪',
+    question: {
+      de: 'Ist der Eingangsbereich vom Wohnbereich getrennt?',
+      en: 'Is the entrance area separated from the living area?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
+      {
+        value: 'partial',
+        label: { de: 'Teilweise', en: 'Partially' },
+        points: 3,
+        recommendation: {
+          de: 'Eine vollständige Trennung lohnt sich. Selbst eine Sichtblende oder ein halbhoher Raumteiler verhindert, dass Gäste sofort ins Wohnzimmer schauen.',
+          en: 'A full separation is worth it. Even a visual screen or half-height divider prevents guests from looking straight into the living room.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Ein offener Eingang ohne Trennung lässt das Chaos ins Wohnzimmer sickern. Überlege einen Raumteiler, eine Schiebetür oder eine Wandnische als Puffer.',
+          en: 'An open entrance without separation lets clutter seep into the living room. Consider a room divider, sliding door, or wall niche as a buffer.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 3 – DURCHGÄNGE (15 pts) ───────────────────────────────────────
+  {
+    id: 6,
+    block: 3,
+    blockTitle: { de: 'Durchgänge', en: 'Corridors & Passages' },
+    blockEmoji: '📏',
+    question: {
+      de: 'Wie breit sind die Hauptdurchgänge im Wohnbereich?',
+      en: 'How wide are the main passages in the living area?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'over110', label: { de: 'Über 110 cm', en: 'Over 110 cm' }, points: 8 },
+      {
+        value: '90-110',
+        label: { de: '90–110 cm', en: '90–110 cm' },
+        points: 5,
+        recommendation: {
+          de: 'Knapp ausreichend – aber bei 90–110 cm wird es mit Möbeln, Kinderwagen oder beim Tragen von Einkäufen schnell eng. Prüfe, ob du an einer Stelle 10–20 cm gewinnen kannst.',
+          en: 'Barely enough – but at 90–110 cm, things get tight with furniture, strollers, or carrying groceries. Check if you can gain 10–20 cm somewhere.',
+        },
+      },
+      {
+        value: 'under90',
+        label: { de: 'Unter 90 cm', en: 'Under 90 cm' },
+        points: 0,
+        recommendation: {
+          de: 'Kritisch: Unter 90 cm werden Durchgänge zur täglichen Frustration. Mit Möbeln beidseitig ist der Weg kaum passierbar. Hier muss umgeplant werden.',
+          en: 'Critical: Under 90 cm, passages become daily frustration. With furniture on both sides, the path is barely passable. Replanning is necessary here.',
+        },
+      },
+      {
+        value: 'unknown',
+        label: { de: 'Weiß ich nicht', en: "I don't know" },
+        points: 3,
+        recommendation: {
+          de: 'Miss das sofort nach – es ist eine der wichtigsten Maßzahlen deines Grundrisses. Standard ist mindestens 90 cm, empfohlen sind 110 cm.',
+          en: 'Measure this right away – it\'s one of the most important dimensions of your floor plan. Standard is at least 90 cm, recommended is 110 cm.',
+        },
+      },
+    ],
+  },
+  {
+    id: 7,
+    block: 3,
+    blockTitle: { de: 'Durchgänge', en: 'Corridors & Passages' },
+    blockEmoji: '📏',
+    question: {
+      de: 'Gibt es Engstellen zwischen Möbeln oder an Türen?',
+      en: 'Are there bottlenecks between furniture or at doors?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'no', label: { de: 'Nein', en: 'No' }, points: 7 },
+      {
+        value: 'unsure',
+        label: { de: 'Unsicher', en: 'Unsure' },
+        points: 4,
+        recommendation: {
+          de: 'Erstelle einen Möblierungsplan im Maßstab 1:50 und miss alle Abstände nach. Viele Engstellen entstehen erst, wenn Möbel im Raum stehen.',
+          en: 'Create a furniture plan at 1:50 scale and measure all distances. Many bottlenecks only become apparent once furniture is in the room.',
+        },
+      },
+      {
+        value: 'yes',
+        label: { de: 'Ja', en: 'Yes' },
+        points: 0,
+        recommendation: {
+          de: 'Identifiziere die genauen Engstellen und plane Umstellungen. Der Mindestabstand zwischen Möbeln im Durchgangsbereich beträgt 90 cm.',
+          en: 'Identify the exact bottlenecks and plan rearrangements. The minimum clearance between furniture in passage areas is 90 cm.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 4 – KÜCHE (20 pts) ─────────────────────────────────────────────
+  {
+    id: 8,
+    block: 4,
+    blockTitle: { de: 'Küche', en: 'Kitchen' },
+    blockEmoji: '🍳',
+    question: {
+      de: 'Welche Küchenform ist geplant?',
+      en: 'What kitchen layout is planned?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'island', label: { de: 'Inselküche', en: 'Island kitchen' }, points: 7 },
+      { value: 'l-shape', label: { de: 'L-Form', en: 'L-shape' }, points: 6 },
+      { value: 'u-shape', label: { de: 'U-Form', en: 'U-shape' }, points: 6 },
+      {
+        value: 'galley',
+        label: { de: 'Zweizeiler', en: 'Galley kitchen' },
+        points: 4,
+        recommendation: {
+          de: 'Ein Zweizeiler ist funktional, aber begrenzt. Achte besonders auf einen Mindestabstand von 110 cm zwischen den Zeilen für komfortables Arbeiten.',
+          en: 'A galley kitchen is functional but limited. Pay particular attention to a minimum clearance of 110 cm between the two rows for comfortable working.',
+        },
+      },
+      {
+        value: 'open',
+        label: { de: 'Noch offen', en: 'Not yet decided' },
+        points: 2,
+        recommendation: {
+          de: 'Definiere die Küchenform jetzt – sie bestimmt Elektro-, Wasseranschlüsse und alle weiteren Planungsschritte. Inselküche und L-Form bieten die größte Flexibilität.',
+          en: 'Define the kitchen layout now – it determines electrical, plumbing connections and all further planning steps. Island and L-shape offer the greatest flexibility.',
+        },
+      },
+    ],
+  },
+  {
+    id: 9,
+    block: 4,
+    blockTitle: { de: 'Küche', en: 'Kitchen' },
+    blockEmoji: '🍳',
+    question: {
+      de: 'Ist genug Abstand zwischen Küche und Insel eingeplant?',
+      en: 'Is enough clearance planned between the kitchen and island?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'over110', label: { de: 'Über 110 cm', en: 'Over 110 cm' }, points: 8 },
+      {
+        value: '90-110',
+        label: { de: '90–110 cm', en: '90–110 cm' },
+        points: 6,
+        recommendation: {
+          de: 'Ausreichend, aber nicht komfortabel. Bei 90–110 cm kann man nicht aneinander vorbeigehen, ohne sich zu berühren. Wenn möglich, auf 120 cm erweitern.',
+          en: 'Sufficient but not comfortable. At 90–110 cm, you can\'t pass each other without touching. Expand to 120 cm if possible.',
+        },
+      },
+      {
+        value: 'under90',
+        label: { de: 'Unter 90 cm', en: 'Under 90 cm' },
+        points: 0,
+        recommendation: {
+          de: 'Kritisch: Unter 90 cm ist dies einer der häufigsten und folgenschwersten Planungsfehler. Die Küche wird im Alltag zur Engstelle. Sofort umplanen.',
+          en: 'Critical: Under 90 cm, this is one of the most common and consequential planning errors. The kitchen becomes a bottleneck in everyday use. Replan immediately.',
+        },
+      },
+      {
+        value: 'unknown',
+        label: { de: 'Weiß ich nicht / keine Insel', en: "Don't know / no island" },
+        points: 3,
+        recommendation: {
+          de: 'Falls du eine Insel planst: Miss diesen Abstand sofort nach. Mindestens 100 cm, besser 120 cm sind Standard.',
+          en: 'If you\'re planning an island: measure this distance right away. At least 100 cm, preferably 120 cm is standard.',
+        },
+      },
+    ],
+  },
+  {
+    id: 10,
+    block: 4,
+    blockTitle: { de: 'Küche', en: 'Kitchen' },
+    blockEmoji: '🍳',
+    question: {
+      de: 'Gibt es eine Speisekammer oder Vorratslösung?',
+      en: 'Is there a pantry or storage solution?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
+      {
+        value: 'unsure',
+        label: { de: 'Noch unsicher', en: 'Not yet sure' },
+        points: 2,
+        recommendation: {
+          de: 'Plane die Vorratslösung jetzt. Ein Hochschrank als Speisekammer oder eine begehbare Nische ab 80 cm Tiefe reicht – und wird später täglich vermisst, wenn nicht vorhanden.',
+          en: 'Plan the storage solution now. A tall cupboard as a pantry or a walk-in niche from 80 cm depth is enough – and will be missed daily if not included.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Ohne Vorratslösung wirst du schnell Stauraum in der Küche vermissen. Eine Speisekammer oder ein Hochschranksystem ist ein Muss – plane mindestens 2–3 Hochschränke ein.',
+          en: 'Without a storage solution, you\'ll quickly miss space in the kitchen. A pantry or tall cabinet system is a must – plan at least 2–3 tall cabinets.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 5 – STAURAUM (20 pts) ─────────────────────────────────────────
+  {
+    id: 11,
+    block: 5,
+    blockTitle: { de: 'Stauraum', en: 'Storage' },
+    blockEmoji: '📦',
+    question: {
+      de: 'Gibt es einen Hauswirtschaftsraum?',
+      en: 'Is there a utility room (laundry room)?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 8 },
+      {
+        value: 'planned',
+        label: { de: 'Noch geplant', en: 'Still being planned' },
+        points: 4,
+        recommendation: {
+          de: 'Priorisiere den Hauswirtschaftsraum – 4–6 m² reichen. Er ist der am häufigsten bereute fehlende Raum bei Bauherrinnen.',
+          en: 'Prioritise the utility room – 4–6 m² is enough. It\'s the most commonly regretted missing room among homebuilders.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Der Hauswirtschaftsraum ist Nr. 1 auf der Liste der "Das hätte ich anders geplant"-Aussagen. Waschmaschine, Trockner, Bügelbrett, Putzmittel – alles unsichtbar. Mindestens 4 m² einplanen.',
+          en: 'The utility room is #1 on the "I should have planned that differently" list. Washing machine, dryer, ironing board, cleaning supplies – all hidden. Plan at least 4 m².',
+        },
+      },
+    ],
+  },
+  {
+    id: 12,
+    block: 5,
+    blockTitle: { de: 'Stauraum', en: 'Storage' },
+    blockEmoji: '📦',
+    question: {
+      de: 'Ist Stauraum im Flur vorgesehen?',
+      en: 'Is storage planned in the hallway?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 6 },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Der Flur ist der erste Ort, an dem Chaos entsteht. Plane Einbauschränke oder eine Nische (min. 40–60 cm tief) für Jacken, Schuhe, Taschen und Reinigungsartikel.',
+          en: 'The hallway is the first place chaos develops. Plan built-in wardrobes or a niche (min. 40–60 cm deep) for coats, shoes, bags and cleaning items.',
+        },
+      },
+    ],
+  },
+  {
+    id: 13,
+    block: 5,
+    blockTitle: { de: 'Stauraum', en: 'Storage' },
+    blockEmoji: '📦',
+    question: {
+      de: 'Gibt es Einbauschränke in der Planung?',
+      en: 'Are built-in wardrobes planned?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 6 },
+      {
+        value: 'partial',
+        label: { de: 'Teilweise', en: 'Partly' },
+        points: 3,
+        recommendation: {
+          de: 'Maximiere Einbauschränke überall wo möglich – besonders in Schlafzimmern und Fluren. Schreiner oder Systeme wie IKEA PAX bieten Maßlösungen für jedes Budget.',
+          en: 'Maximise built-ins everywhere possible – especially in bedrooms and hallways. Carpenters or systems like IKEA PAX offer custom solutions for every budget.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Einbauschränke nutzen jeden Zentimeter und schaffen bis zu doppelt so viel Stauraum wie freistehende Möbel. Jetzt noch einplanen – besonders in Schlafzimmern.',
+          en: 'Built-in wardrobes use every centimetre and create up to twice as much storage as freestanding furniture. Plan them now – especially in bedrooms.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 6 – MÖBLIERBARKEIT (15 pts) ───────────────────────────────────
+  {
+    id: 14,
+    block: 6,
+    blockTitle: { de: 'Möblierbarkeit', en: 'Furniture Placement' },
+    blockEmoji: '🛋️',
+    question: {
+      de: 'Ist bereits klar, wo Sofa und Esstisch stehen werden?',
+      en: 'Is it already clear where the sofa and dining table will go?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 7 },
+      {
+        value: 'partial',
+        label: { de: 'Teilweise', en: 'Partly' },
+        points: 4,
+        recommendation: {
+          de: 'Lege beide Hauptmöbel jetzt fest. Sie bestimmen die Positionen von Steckdosen, Lichtpunkten und Türen – Änderungen danach sind teuer.',
+          en: 'Fix both main furniture pieces now. They determine the positions of sockets, light points and doors – changes after that are expensive.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Ohne festgelegte Möbelplatzierung riskierst du Fensterpositionen ohne Wandfläche, falsch gesetzte Steckdosen und Lichtschalter. Erstelle einen Möblierungsplan im Maßstab 1:50.',
+          en: 'Without defined furniture placement, you risk window positions without wall space, wrongly placed sockets and light switches. Create a furniture plan at scale 1:50.',
+        },
+      },
+    ],
+  },
+  {
+    id: 15,
+    block: 6,
+    blockTitle: { de: 'Möblierbarkeit', en: 'Furniture Placement' },
+    blockEmoji: '🛋️',
+    question: {
+      de: 'Sind Fenster so geplant, dass Möbel sinnvoll platziert werden können?',
+      en: 'Are windows planned so that furniture can be placed sensibly?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 8 },
+      {
+        value: 'unsure',
+        label: { de: 'Unsicher', en: 'Unsure' },
+        points: 4,
+        recommendation: {
+          de: 'Erstelle einen Möblierungsplan und überprüfe: Gibt es mindestens 2 m breite zusammenhängende Wandflächen für Sofa und Schrank? Fenster unter 80 cm Höhe blockieren Stellflächen.',
+          en: 'Create a furniture plan and check: Are there at least 2 m wide continuous wall areas for sofa and wardrobe? Windows below 80 cm height block placement areas.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Zu viele oder falsch positionierte Fenster sind einer der häufigsten Fehler. Regel: Mindestens eine 2,5 m breite freie Wandfläche pro Hauptraum für Möbelaufstellung sichern.',
+          en: 'Too many or wrongly positioned windows are one of the most common mistakes. Rule: Secure at least one 2.5 m wide free wall area per main room for furniture placement.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 7 – KINDERFREUNDLICHKEIT (10 pts) ─────────────────────────────
+  {
+    id: 16,
+    block: 7,
+    blockTitle: { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
+    blockEmoji: '👶',
+    question: {
+      de: 'Sind die Kinderzimmer mindestens 12 m² groß?',
+      en: "Are the children's rooms at least 12 m²?",
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
+      {
+        value: 'unsure',
+        label: { de: 'Unsicher', en: 'Unsure' },
+        points: 2,
+        recommendation: {
+          de: 'Miss die Kinderzimmer jetzt nach. 12 m² ist das Minimum für Bett, Schrank und Schreibtisch. Unter 10 m² ist ein Kinderzimmer kaum nutzbar.',
+          en: "Measure the children's rooms now. 12 m² is the minimum for a bed, wardrobe and desk. Under 10 m², a child's room is barely usable.",
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Unter 12 m² passen Bett, Schrank und Schreibtisch kaum noch rein. Prüfe, ob sich durch Verschieben von Wänden oder Umwidmen anderer Räume mehr Fläche gewinnen lässt.',
+          en: "Under 12 m², a bed, wardrobe and desk barely fit. Check if walls can be shifted or other rooms repurposed to gain more space.",
+        },
+      },
+    ],
+  },
+  {
+    id: 17,
+    block: 7,
+    blockTitle: { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
+    blockEmoji: '👶',
+    question: {
+      de: 'Gibt es kurze Wege zwischen Eltern- und Kinderzimmern?',
+      en: "Are there short routes between parents' and children's rooms?",
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
+      {
+        value: 'partial',
+        label: { de: 'Teilweise', en: 'Partly' },
+        points: 3,
+        recommendation: {
+          de: 'Versuche, Eltern- und Kinderzimmer auf dieselbe Ebene zu bringen. Nächtliche Wege über Treppen oder durch den halben Grundriss werden schnell zum Dauerproblem.',
+          en: 'Try to bring parents\' and children\'s rooms to the same floor. Nightly trips across stairs or through half the floor plan quickly become a persistent issue.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Lange Wege nachts mit Kindern sind Alltag für viele Jahre. Plane Eltern- und Kinderzimmer auf derselben Ebene, möglichst nebeneinander oder mit direkter Verbindung.',
+          en: "Long nightly trips with children are everyday life for many years. Plan parents' and children's rooms on the same floor, ideally next to each other or with a direct connection.",
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 8 – BADEZIMMER (10 pts) ───────────────────────────────────────
+  {
+    id: 18,
+    block: 8,
+    blockTitle: { de: 'Badezimmer', en: 'Bathroom' },
+    blockEmoji: '🛁',
+    question: {
+      de: 'Hat das Hauptbad Tageslicht?',
+      en: 'Does the main bathroom have natural light?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Ein Bad ohne Tageslicht wirkt schnell bedrückend und fühlt sich wie ein Bunker an. Prüfe Dachfenster, Oberlichter oder Lichtschächte als Alternative – das ist möglich, auch bei Innenbädern.',
+          en: 'A bathroom without natural light quickly feels oppressive and bunker-like. Check skylights, clerestory windows or light wells as alternatives – possible even for interior bathrooms.',
+        },
+      },
+    ],
+  },
+  {
+    id: 19,
+    block: 8,
+    blockTitle: { de: 'Badezimmer', en: 'Bathroom' },
+    blockEmoji: '🛁',
+    question: {
+      de: 'Ist Platz für Stauraum im Bad vorgesehen?',
+      en: 'Is storage space planned in the bathroom?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
+      {
+        value: 'unsure',
+        label: { de: 'Unsicher', en: 'Unsure' },
+        points: 2,
+        recommendation: {
+          de: 'Plane jetzt konkret: Nischen in der Dusche, Unterschränke am Waschtisch und ein Hochschrank (min. 30 cm tief) sind das Minimum für ein funktionales Bad.',
+          en: 'Plan concretely now: niches in the shower, under-sink cabinets and a tall cabinet (min. 30 cm deep) are the minimum for a functional bathroom.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Bäder brauchen mehr Stauraum als du denkst: Handtücher, Putzmittel, Medikamente, Kosmetik. Plane Wandnischen, Unterschränke oder mindestens einen Hochschrank ein.',
+          en: 'Bathrooms need more storage than you think: towels, cleaning supplies, medicines, cosmetics. Plan wall niches, under-sink cabinets, or at least one tall cabinet.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 9 – BONUSFRAGE (no score, lead capture) ───────────────────────
+  {
+    id: 20,
+    block: 9,
+    blockTitle: { de: 'Bonusfrage', en: 'Bonus Question' },
+    blockEmoji: '💬',
+    question: {
+      de: 'Was bereitet dir aktuell am meisten Unsicherheit bei deinem Grundriss?',
+      en: 'What is currently causing you the most uncertainty about your floor plan?',
+    },
+    type: 'text',
+    scorable: false,
+  },
+]
+
+export const TOTAL_QUESTIONS = questions.length
+export const MAX_SCORE = 100
