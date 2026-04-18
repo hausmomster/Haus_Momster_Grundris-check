@@ -40,7 +40,7 @@ const LABELS: Array<{
     },
     subline: {
       de: 'Du hast die meisten typischen Planungsfehler vermieden. Die kleinen Lücken findest du unten.',
-      en: 'You've avoided most typical planning errors. Find the small gaps below.',
+      en: "You've avoided most typical planning errors. Find the small gaps below.",
     },
   },
   {
