@@ -337,6 +337,7 @@ export const questions: Question[] = [
     },
     type: 'single',
     scorable: true,
+    skipWhen: (answers) => answers[9] !== 'island',
     options: [
       {
         value: 'under100',
