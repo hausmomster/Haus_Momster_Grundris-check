@@ -91,60 +91,6 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
 
 // ─── Score result view ────────────────────────────────────────────────────────
 
-function ContactForm({ token }: { token: string | null }) {
-  const { t } = useI18n()
-  const [email, setEmail] = useState('')
-  const [instagram, setInstagram] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!email && !instagram) return
-    if (token && token !== 'dev') {
-      await fetch('/api/save-contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, contactEmail: email || undefined, instagramHandle: instagram || undefined }),
-      })
-    }
-    setSubmitted(true)
-  }
-
-  if (submitted) {
-    return (
-      <p className="font-sans text-sm text-taupe text-center py-2">
-        {t('Danke – ich melde mich bei dir!', 'Thank you – I will be in touch!')}
-      </p>
-    )
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-3">
-      <input
-        type="email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder={t('E-Mail-Adresse (optional)', 'Email address (optional)')}
-        className="w-full border border-warm-gray-light rounded-xl px-4 py-3 font-sans text-sm text-charcoal placeholder-warm-gray focus:outline-none focus:ring-2 focus:ring-taupe bg-white"
-      />
-      <input
-        type="text"
-        value={instagram}
-        onChange={e => setInstagram(e.target.value)}
-        placeholder={t('Instagram-Handle, z.B. @haus_momster (optional)', 'Instagram handle, e.g. @haus_momster (optional)')}
-        className="w-full border border-warm-gray-light rounded-xl px-4 py-3 font-sans text-sm text-charcoal placeholder-warm-gray focus:outline-none focus:ring-2 focus:ring-taupe bg-white"
-      />
-      <button
-        type="submit"
-        disabled={!email && !instagram}
-        className={`btn-primary w-full ${!email && !instagram ? 'opacity-40 cursor-not-allowed' : ''}`}
-      >
-        {t('Senden', 'Submit')}
-      </button>
-    </form>
-  )
-}
-
 function ResultView({ result, token, onRestart }: { result: ScoreResult; token: string | null; onRestart: () => void }) {
   const { t } = useI18n()
 
@@ -200,25 +146,6 @@ function ResultView({ result, token, onRestart }: { result: ScoreResult; token: 
         </div>
       )}
 
-      {/* Bonus answer + contact opt-in */}
-      {result.bonusAnswer && (
-        <div className="rounded-xl border border-warm-gray-light bg-white p-6 space-y-5">
-          <div className="border-l-2 border-taupe pl-4">
-            <p className="font-sans text-xs tracking-widest uppercase text-warm-gray mb-2">
-              {t('Deine größte Unsicherheit', 'Your biggest concern')}
-            </p>
-            <p className="font-sans text-charcoal italic">"{result.bonusAnswer}"</p>
-          </div>
-          <p className="font-sans text-sm text-warm-gray leading-relaxed">
-            {t(
-              'Genau darüber können wir im persönlichen Ask Me Anything sprechen. Hinterlasse deine E-Mail oder deinen Instagram-Handle – ich melde mich bei dir.',
-              'We can talk about exactly this in a personal Ask Me Anything session. Leave your email or Instagram handle and I will reach out to you.'
-            )}
-          </p>
-          <ContactForm token={token} />
-        </div>
-      )}
-
       {/* Perfect score */}
       {result.recommendations.length === 0 && (
         <div className="text-center py-8">
@@ -231,31 +158,44 @@ function ResultView({ result, token, onRestart }: { result: ScoreResult; token: 
         </div>
       )}
 
-      {/* Consulting CTA — visible on web and in PDF */}
-      <div className="rounded-xl border border-taupe bg-white p-8 text-center">
-        <p className="font-sans text-xs tracking-widest uppercase text-taupe mb-4">
-          {t('Nächster Schritt', 'Next Step')}
-        </p>
-        <h3 className="font-serif text-2xl text-charcoal mb-3">
-          {t(
-            'Noch offene Fragen? Lass uns sprechen.',
-            'Still have questions? Let\'s talk.'
-          )}
-        </h3>
-        <p className="font-sans text-sm text-warm-gray leading-relaxed mb-6 max-w-sm mx-auto">
-          {t(
-            'Im persönlichen 1:1-Gespräch gehe ich gezielt auf deinen Grundriss ein – konkrete Antworten, keine allgemeinen Tipps.',
-            'In a personal 1:1 session I look specifically at your floor plan – concrete answers, no generic advice.'
-          )}
-        </p>
-        <a
-          href="https://hausmomster.setmore.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary inline-block"
-        >
-          {t('Beratungsgespräch buchen', 'Book a consultation')}
-        </a>
+      {/* Bonus answer + consulting CTA — merged card */}
+      <div className="rounded-xl border border-taupe bg-white p-8">
+        {result.bonusAnswer && (
+          <>
+            <div className="border-l-2 border-taupe pl-4 mb-6">
+              <p className="font-sans text-xs tracking-widest uppercase text-warm-gray mb-2">
+                {t('Deine größte Unsicherheit', 'Your biggest concern')}
+              </p>
+              <p className="font-sans text-charcoal italic">"{result.bonusAnswer}"</p>
+            </div>
+            <hr className="border-warm-gray-light mb-6" />
+          </>
+        )}
+        <div className="text-center">
+          <p className="font-sans text-xs tracking-widest uppercase text-taupe mb-4">
+            {t('Nächster Schritt', 'Next Step')}
+          </p>
+          <h3 className="font-serif text-2xl text-charcoal mb-3">
+            {t(
+              'Noch offene Fragen? Lass uns sprechen.',
+              "Still have questions? Let's talk."
+            )}
+          </h3>
+          <p className="font-sans text-sm text-warm-gray leading-relaxed mb-6 max-w-sm mx-auto">
+            {t(
+              'Im persönlichen 1:1-Gespräch gehe ich gezielt auf deinen Grundriss ein – konkrete Antworten, keine allgemeinen Tipps.',
+              'In a personal 1:1 session I look specifically at your floor plan – concrete answers, no generic advice.'
+            )}
+          </p>
+          <a
+            href="https://hausmomster.setmore.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary inline-block"
+          >
+            Ask me anything
+          </a>
+        </div>
       </div>
 
       <div className="pt-4 border-t border-warm-gray-light text-center no-print">
