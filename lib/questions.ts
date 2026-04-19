@@ -26,7 +26,7 @@ export const questions: Question[] = [
     blockTitle: { de: 'Basisinfos', en: 'Basic Info' },
     blockEmoji: '🏠',
     question: {
-      de: 'Befindet sich dein Projekt aktuell in welcher Phase?',
+      de: 'In welcher Phase befindet sich dein Projekt aktuell?',
       en: 'What phase is your project currently in?',
     },
     type: 'single',
