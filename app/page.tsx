@@ -203,15 +203,15 @@ function LandingContent() {
 
             <h1 className="font-serif text-4xl md:text-5xl leading-tight text-charcoal mb-6">
               {t(
-                'Bevor du baust: Lass deinen Grundriss checken.',
-                'Before you build: Get your floor plan checked.'
+                'Bevor du baust oder umbaust: Lass deinen Grundriss checken.',
+                'Before you build or renovate: Get your floor plan checked.'
               )}
             </h1>
 
             <p className="font-sans text-base text-warm-gray leading-relaxed mb-8 max-w-md">
               {t(
-                'Kleine Planungsfehler kosten später fünfstellige Summen – oder jeden Tag Nerven. In 10 Minuten weißt du, ob dein Grundriss wirklich durchdacht ist.',
-                'Small planning mistakes can cost five-figure sums later – or daily frustration. In 10 minutes you will know whether your floor plan is truly well thought through.'
+                'Kleine Planungsfehler kosten später fünfstellige Summen – oder jeden Tag Nerven. In 10 Minuten weißt du, ob dein Grundriss wirklich funktioniert.',
+                'Small planning mistakes can cost five-figure sums later – or daily frustration. In 10 minutes you will know whether your floor plan truly works.'
               )}
             </p>
 
