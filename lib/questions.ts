@@ -355,8 +355,8 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Ohne Vorratslösung fehlt in der Küche schnell der Platz für Lebensmittel, Dosen und Vorräte. Mindestens ein dedizierter Hochschrank für Vorräte ist Pflicht – eine Speisekammer ab 60 cm Tiefe ist die komfortablere Lösung, wenn der Grundriss es erlaubt.',
-          en: 'Without a storage solution, space for food, tins and supplies quickly runs out in the kitchen. At least one dedicated tall cabinet for provisions is a must – a pantry from 60 cm depth is the more comfortable solution if the floor plan allows it.',
+          de: 'Ohne Vorratslösung fehlt in der Küche schnell der Platz für Lebensmittel, Dosen und Vorräte. Ein dedizierter Hochschrank für Vorräte macht einen spürbaren Unterschied – eine Speisekammer ab 60 cm Tiefe ist noch komfortabler, wenn der Grundriss es erlaubt.',
+          en: 'Without a storage solution, space for food, tins and supplies quickly runs out in the kitchen. A dedicated tall cabinet for provisions makes a noticeable difference – a pantry from 60 cm depth is even more comfortable if the floor plan allows it.',
         },
       },
     ],
