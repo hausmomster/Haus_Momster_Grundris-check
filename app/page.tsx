@@ -137,7 +137,7 @@ function LandingContent() {
           {t('20 Fragen · Score 0–100 · Konkrete Empfehlungen', '20 questions · Score 0–100 · Concrete recommendations')}
         </p>
 
-        <div className="divide-y divide-warm-gray-light border-t border-warm-gray-light">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {[
             { de: 'Basisinfos', en: 'Basic Info' },
             { de: 'Eingangsbereich', en: 'Entrance Area' },
@@ -149,11 +149,14 @@ function LandingContent() {
             { de: 'Badezimmer', en: 'Bathroom' },
             { de: 'Bonusfrage', en: 'Bonus Question' },
           ].map((block, i) => (
-            <div key={block.de} className="flex items-center gap-8 py-5">
-              <span className="font-serif text-3xl text-warm-gray-light w-12 flex-shrink-0 leading-none">
+            <div
+              key={block.de}
+              className="group flex flex-col gap-3 px-5 py-4 rounded-xl bg-white border border-warm-gray-light hover:border-taupe hover:shadow-sm transition-all duration-200 cursor-default"
+            >
+              <span className="font-serif text-lg text-taupe leading-none">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <span className="font-sans text-charcoal tracking-wide">{t(block.de, block.en)}</span>
+              <span className="font-sans text-sm text-charcoal leading-snug">{t(block.de, block.en)}</span>
             </div>
           ))}
         </div>
