@@ -94,10 +94,17 @@ export function computeScore(answers: Answers, lang: Lang): ScoreResult {
     const selected = answers[q.id]
     if (!selected || !q.options) continue
 
+    const maxPoints = Math.max(...q.options.map((o) => o.points))
+
+    // Skipped questions get full points — no penalty for non-applicable situations
+    if (selected === 'skip') {
+      total += maxPoints
+      continue
+    }
+
     const chosen = q.options.find((o) => o.value === selected)
     if (!chosen) continue
 
-    const maxPoints = Math.max(...q.options.map((o) => o.points))
     total += chosen.points
 
     if (chosen.points < maxPoints && chosen.recommendation) {

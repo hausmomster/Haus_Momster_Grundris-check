@@ -15,6 +15,7 @@ export type Question = {
   question: Record<Lang, string>
   type: 'single' | 'text'
   scorable: boolean
+  skippable?: boolean
   options?: Option[]
 }
 
@@ -528,19 +529,20 @@ export const questions: Question[] = [
     blockTitle: { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
     blockEmoji: '👶',
     question: {
-      de: 'Wie groß sind die Kinderzimmer?',
-      en: "How large are the children's rooms?",
+      de: 'Wie groß sind die Kinder- oder Arbeitszimmer?',
+      en: 'How large are the children\'s or office rooms?',
     },
     type: 'single',
     scorable: true,
+    skippable: true,
     options: [
       {
         value: 'under10',
         label: { de: 'Unter 10 m²', en: 'Under 10 m²' },
         points: 0,
         recommendation: {
-          de: 'Unter 10 m² ist ein Kinderzimmer kaum nutzbar – Bett, Schrank und Schreibtisch passen kaum rein. Prüfe ob Wände verschoben werden können.',
-          en: "Under 10 m², a child's room is barely usable – bed, wardrobe and desk barely fit. Check if walls can be shifted.",
+          de: 'Unter 10 m² ist ein Kinder- oder Arbeitszimmer kaum nutzbar – Bett, Schrank und Schreibtisch bzw. Schreibtisch und Regal passen kaum rein. Prüfe ob Wände verschoben werden können.',
+          en: 'Under 10 m², a children\'s or office room is barely usable – bed, wardrobe and desk or desk and shelving barely fit. Check if walls can be shifted.',
         },
       },
       {
@@ -566,6 +568,7 @@ export const questions: Question[] = [
     },
     type: 'single',
     scorable: true,
+    skippable: true,
     options: [
       { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
       {
