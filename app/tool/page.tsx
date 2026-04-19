@@ -177,7 +177,7 @@ function ResultView({ result, token, onRestart }: { result: ScoreResult; token: 
           </p>
           <h3 className="font-serif text-2xl text-charcoal mb-3">
             {result.bonusAnswer
-              ? t('Genau dafür ist mein Ask Me Anything.', 'That's exactly what my Ask Me Anything is for.')
+              ? t('Genau dafür ist mein Ask Me Anything.', "That's exactly what my Ask Me Anything is for.")
               : t('Lass uns das gemeinsam anschauen.', "Let's look at this together.")}
           </h3>
           <p className="font-sans text-sm text-warm-gray leading-relaxed mb-6 max-w-sm mx-auto">
