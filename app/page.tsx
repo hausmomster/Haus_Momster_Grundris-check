@@ -75,8 +75,8 @@ function LandingContent() {
 
         <p className="font-sans text-lg text-warm-gray leading-relaxed mb-10 max-w-lg mx-auto">
           {t(
-            'Beantworte 20 Fragen zu deinem Grundriss und erhalte einen persönlichen Score mit konkreten Handlungsempfehlungen – wie eine Expertenberatung, in 10 Minuten.',
-            'Answer 20 questions about your floor plan and receive a personal score with concrete recommendations – like an expert consultation, in 10 minutes.'
+            'Beantworte 20 Fragen zu deinem Grundriss und erhalte einen persönlichen Score mit konkreten Handlungsempfehlungen – wie eine Expertenberatung, aber in 10 Minuten.',
+            'Answer 20 questions about your floor plan and receive a personal score with concrete recommendations – like an expert consultation, but in 10 minutes.'
           )}
         </p>
 
@@ -103,8 +103,8 @@ function LandingContent() {
           </h2>
           <p className="font-sans text-warm-gray text-center mb-12">
             {t(
-              'Dein persönlicher Score aus 9 Bereichen',
-              'Your personal score across 9 areas'
+              'Check mit konkreten Hinweisen auf Fehler inklusive Optimierungsvorschlägen.',
+              'Check with concrete pointers on errors including optimisation suggestions.'
             )}
           </p>
 
@@ -158,8 +158,8 @@ function LandingContent() {
         </h2>
         <p className="font-sans text-taupe-light mb-10 max-w-md mx-auto">
           {t(
-            'Das wirkt wie persönliche Beratung – aber ist sofort verfügbar, zu jeder Zeit.',
-            'It feels like personal advice – but is available instantly, at any time.'
+            'Deine persönliche Online Beratung.',
+            'Your personal online consultation.'
           )}
         </p>
         <a href={SHOPIFY_URL} className="inline-block bg-cream text-taupe px-10 py-5 font-sans font-medium text-base tracking-wide hover:bg-taupe-light hover:text-cream transition-colors">

@@ -157,16 +157,6 @@ export const questions: Question[] = [
     type: 'single',
     scorable: true,
     options: [
-      { value: 'over110', label: { de: 'Über 110 cm', en: 'Over 110 cm' }, points: 8 },
-      {
-        value: '90-110',
-        label: { de: '90–110 cm', en: '90–110 cm' },
-        points: 5,
-        recommendation: {
-          de: 'Knapp ausreichend – aber bei 90–110 cm wird es mit Möbeln, Kinderwagen oder beim Tragen von Einkäufen schnell eng. Prüfe, ob du an einer Stelle 10–20 cm gewinnen kannst.',
-          en: 'Barely enough – but at 90–110 cm, things get tight with furniture, strollers, or carrying groceries. Check if you can gain 10–20 cm somewhere.',
-        },
-      },
       {
         value: 'under90',
         label: { de: 'Unter 90 cm', en: 'Under 90 cm' },
@@ -176,6 +166,16 @@ export const questions: Question[] = [
           en: 'Critical: Under 90 cm, passages become daily frustration. With furniture on both sides, the path is barely passable. Replanning is necessary here.',
         },
       },
+      {
+        value: '90-110',
+        label: { de: '90–110 cm', en: '90–110 cm' },
+        points: 5,
+        recommendation: {
+          de: 'Knapp ausreichend – aber bei 90–110 cm wird es mit Möbeln, Kinderwagen oder beim Tragen von Einkäufen schnell eng. Prüfe, ob du an einer Stelle 10–20 cm gewinnen kannst.',
+          en: 'Barely enough – but at 90–110 cm, things get tight with furniture, strollers, or carrying groceries. Check if you can gain 10–20 cm somewhere.',
+        },
+      },
+      { value: 'over110', label: { de: 'Über 110 cm', en: 'Over 110 cm' }, points: 8 },
       {
         value: 'unknown',
         label: { de: 'Weiß ich nicht', en: "I don't know" },
@@ -189,6 +189,34 @@ export const questions: Question[] = [
   },
   {
     id: 7,
+    block: 3,
+    blockTitle: { de: 'Durchgänge', en: 'Corridors & Passages' },
+    blockEmoji: '📏',
+    question: {
+      de: 'Wie breit sind die Nebendurchgänge (z.B. Nebenflur, Abstellraum)?',
+      en: 'How wide are the secondary passages (e.g. secondary hallway, storage room)?',
+    },
+    type: 'single',
+    scorable: false,
+    options: [
+      { value: 'under80', label: { de: 'Unter 80 cm', en: 'Under 80 cm' }, points: 0, recommendation: {
+        de: 'Nebendurchgänge unter 80 cm werden im Alltag zur Engstelle – besonders beim Tragen von Gegenständen oder mit Kindern.',
+        en: 'Secondary passages under 80 cm become bottlenecks in everyday use – especially when carrying items or with children.',
+      }},
+      { value: '80-90', label: { de: '80–90 cm', en: '80–90 cm' }, points: 0, recommendation: {
+        de: 'Ausreichend für Nebenwege – aber prüfe ob du auf 90 cm erweitern kannst, das macht einen spürbaren Unterschied im Alltag.',
+        en: 'Sufficient for secondary routes – but check if you can expand to 90 cm, which makes a noticeable difference in everyday use.',
+      }},
+      { value: 'over90', label: { de: 'Über 90 cm', en: 'Over 90 cm' }, points: 0 },
+      { value: 'none', label: { de: 'Keine Nebendurchgänge', en: 'No secondary passages' }, points: 0 },
+      { value: 'unknown', label: { de: 'Weiß ich nicht', en: "I don't know" }, points: 0, recommendation: {
+        de: 'Miss alle Durchgänge im Grundriss nach – auch Nebenwege sollten mindestens 80 cm breit sein.',
+        en: 'Measure all passages in the floor plan – secondary routes should also be at least 80 cm wide.',
+      }},
+    ],
+  },
+  {
+    id: 8,
     block: 3,
     blockTitle: { de: 'Durchgänge', en: 'Corridors & Passages' },
     blockEmoji: '📏',
@@ -223,7 +251,7 @@ export const questions: Question[] = [
 
   // ─── BLOCK 4 – KÜCHE (20 pts) ─────────────────────────────────────────────
   {
-    id: 8,
+    id: 9,
     block: 4,
     blockTitle: { de: 'Küche', en: 'Kitchen' },
     blockEmoji: '🍳',
@@ -258,7 +286,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: 9,
+    id: 10,
     block: 4,
     blockTitle: { de: 'Küche', en: 'Kitchen' },
     blockEmoji: '🍳',
@@ -269,25 +297,25 @@ export const questions: Question[] = [
     type: 'single',
     scorable: true,
     options: [
-      { value: 'over110', label: { de: 'Über 110 cm', en: 'Over 110 cm' }, points: 8 },
       {
-        value: '90-110',
-        label: { de: '90–110 cm', en: '90–110 cm' },
-        points: 6,
-        recommendation: {
-          de: 'Ausreichend, aber nicht komfortabel. Bei 90–110 cm kann man nicht aneinander vorbeigehen, ohne sich zu berühren. Wenn möglich, auf 120 cm erweitern.',
-          en: 'Sufficient but not comfortable. At 90–110 cm, you can\'t pass each other without touching. Expand to 120 cm if possible.',
-        },
-      },
-      {
-        value: 'under90',
-        label: { de: 'Unter 90 cm', en: 'Under 90 cm' },
+        value: 'under100',
+        label: { de: 'Unter 100 cm', en: 'Under 100 cm' },
         points: 0,
         recommendation: {
-          de: 'Kritisch: Unter 90 cm ist dies einer der häufigsten und folgenschwersten Planungsfehler. Die Küche wird im Alltag zur Engstelle. Sofort umplanen.',
-          en: 'Critical: Under 90 cm, this is one of the most common and consequential planning errors. The kitchen becomes a bottleneck in everyday use. Replan immediately.',
+          de: 'Kritisch: Unter 100 cm ist dies einer der häufigsten und folgenschwersten Planungsfehler. Die Küche wird im Alltag zur Engstelle. Sofort umplanen.',
+          en: 'Critical: Under 100 cm, this is one of the most common and consequential planning errors. The kitchen becomes a bottleneck in everyday use. Replan immediately.',
         },
       },
+      {
+        value: '100-115',
+        label: { de: '100–115 cm', en: '100–115 cm' },
+        points: 6,
+        recommendation: {
+          de: 'Ausreichend, aber nicht komfortabel. Bei 100–115 cm kann man nicht aneinander vorbeigehen, ohne sich zu berühren. Wenn möglich, auf 120 cm erweitern.',
+          en: 'Sufficient but not comfortable. At 100–115 cm, you can\'t pass each other without touching. Expand to 120 cm if possible.',
+        },
+      },
+      { value: 'ab120', label: { de: 'Ab 120 cm', en: 'From 120 cm' }, points: 8 },
       {
         value: 'unknown',
         label: { de: 'Weiß ich nicht / keine Insel', en: "Don't know / no island" },
@@ -300,7 +328,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: 10,
+    id: 11,
     block: 4,
     blockTitle: { de: 'Küche', en: 'Kitchen' },
     blockEmoji: '🍳',
@@ -335,7 +363,7 @@ export const questions: Question[] = [
 
   // ─── BLOCK 5 – STAURAUM (20 pts) ─────────────────────────────────────────
   {
-    id: 11,
+    id: 12,
     block: 5,
     blockTitle: { de: 'Stauraum', en: 'Storage' },
     blockEmoji: '📦',
@@ -368,7 +396,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: 12,
+    id: 13,
     block: 5,
     blockTitle: { de: 'Stauraum', en: 'Storage' },
     blockEmoji: '📦',
@@ -392,7 +420,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: 13,
+    id: 14,
     block: 5,
     blockTitle: { de: 'Stauraum', en: 'Storage' },
     blockEmoji: '📦',
@@ -427,7 +455,7 @@ export const questions: Question[] = [
 
   // ─── BLOCK 6 – MÖBLIERBARKEIT (15 pts) ───────────────────────────────────
   {
-    id: 14,
+    id: 15,
     block: 6,
     blockTitle: { de: 'Möblierbarkeit', en: 'Furniture Placement' },
     blockEmoji: '🛋️',
@@ -460,7 +488,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: 15,
+    id: 16,
     block: 6,
     blockTitle: { de: 'Möblierbarkeit', en: 'Furniture Placement' },
     blockEmoji: '🛋️',
@@ -495,40 +523,40 @@ export const questions: Question[] = [
 
   // ─── BLOCK 7 – KINDERFREUNDLICHKEIT (10 pts) ─────────────────────────────
   {
-    id: 16,
+    id: 17,
     block: 7,
     blockTitle: { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
     blockEmoji: '👶',
     question: {
-      de: 'Sind die Kinderzimmer mindestens 12 m² groß?',
-      en: "Are the children's rooms at least 12 m²?",
+      de: 'Wie groß sind die Kinderzimmer?',
+      en: "How large are the children's rooms?",
     },
     type: 'single',
     scorable: true,
     options: [
-      { value: 'yes', label: { de: 'Ja', en: 'Yes' }, points: 5 },
       {
-        value: 'unsure',
-        label: { de: 'Unsicher', en: 'Unsure' },
-        points: 2,
-        recommendation: {
-          de: 'Miss die Kinderzimmer jetzt nach. 12 m² ist das Minimum für Bett, Schrank und Schreibtisch. Unter 10 m² ist ein Kinderzimmer kaum nutzbar.',
-          en: "Measure the children's rooms now. 12 m² is the minimum for a bed, wardrobe and desk. Under 10 m², a child's room is barely usable.",
-        },
-      },
-      {
-        value: 'no',
-        label: { de: 'Nein', en: 'No' },
+        value: 'under10',
+        label: { de: 'Unter 10 m²', en: 'Under 10 m²' },
         points: 0,
         recommendation: {
-          de: 'Unter 12 m² passen Bett, Schrank und Schreibtisch kaum noch rein. Prüfe, ob sich durch Verschieben von Wänden oder Umwidmen anderer Räume mehr Fläche gewinnen lässt.',
-          en: "Under 12 m², a bed, wardrobe and desk barely fit. Check if walls can be shifted or other rooms repurposed to gain more space.",
+          de: 'Unter 10 m² ist ein Kinderzimmer kaum nutzbar – Bett, Schrank und Schreibtisch passen kaum rein. Prüfe ob Wände verschoben werden können.',
+          en: "Under 10 m², a child's room is barely usable – bed, wardrobe and desk barely fit. Check if walls can be shifted.",
         },
       },
+      {
+        value: '12-15',
+        label: { de: '12–15 m²', en: '12–15 m²' },
+        points: 3,
+        recommendation: {
+          de: 'Solide Größe – Bett, Schrank und Schreibtisch haben Platz. Wenn möglich auf 15 m²+ erweitern für mehr Spielraum.',
+          en: 'Solid size – bed, wardrobe and desk have room. Expand to 15 m²+ if possible for more play space.',
+        },
+      },
+      { value: 'over20', label: { de: 'Über 20 m²', en: 'Over 20 m²' }, points: 5 },
     ],
   },
   {
-    id: 17,
+    id: 18,
     block: 7,
     blockTitle: { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
     blockEmoji: '👶',
@@ -563,7 +591,7 @@ export const questions: Question[] = [
 
   // ─── BLOCK 8 – BADEZIMMER (10 pts) ───────────────────────────────────────
   {
-    id: 18,
+    id: 19,
     block: 8,
     blockTitle: { de: 'Badezimmer', en: 'Bathroom' },
     blockEmoji: '🛁',
@@ -587,7 +615,7 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: 19,
+    id: 20,
     block: 8,
     blockTitle: { de: 'Badezimmer', en: 'Bathroom' },
     blockEmoji: '🛁',
@@ -622,7 +650,7 @@ export const questions: Question[] = [
 
   // ─── BLOCK 9 – BONUSFRAGE (no score, lead capture) ───────────────────────
   {
-    id: 20,
+    id: 21,
     block: 9,
     blockTitle: { de: 'Bonusfrage', en: 'Bonus Question' },
     blockEmoji: '💬',

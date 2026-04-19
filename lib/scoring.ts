@@ -112,7 +112,7 @@ export function computeScore(answers: Answers, lang: Lang): ScoreResult {
     }
   }
 
-  const bonusAnswer = answers[20] ?? ''
+  const bonusAnswer = answers[21] ?? ''
 
   const tier =
     LABELS.find((l) => total >= l.min) ?? LABELS[LABELS.length - 1]
