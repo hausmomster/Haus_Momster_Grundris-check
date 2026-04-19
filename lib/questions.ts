@@ -315,7 +315,7 @@ export const questions: Question[] = [
           en: 'Sufficient but not comfortable. At 100–115 cm, you can\'t pass each other without touching. Expand to 120 cm if possible.',
         },
       },
-      { value: 'ab120', label: { de: 'Ab 120 cm', en: 'From 120 cm' }, points: 8 },
+      { value: 'ab120', label: { de: 'Über 120 cm', en: 'Over 120 cm' }, points: 8 },
       {
         value: 'unknown',
         label: { de: 'Weiß ich nicht / keine Insel', en: "Don't know / no island" },
