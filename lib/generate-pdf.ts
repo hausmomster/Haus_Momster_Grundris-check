@@ -1,12 +1,48 @@
-import PDFDocument from 'pdfkit'
+import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib'
 
-const TAUPE = '#B8956A'
-const CHARCOAL = '#2C2C2C'
-const WARM_GRAY = '#8C8880'
-const LIGHT = '#E8E4DF'
-const WHITE = '#FFFFFF'
-const CREAM = '#FAF7F4'
+// ── Colours ───────────────────────────────────────────────────────────────────
+const CREAM   = rgb(250/255, 247/255, 244/255)
+const CHARCOAL = rgb(44/255,  44/255,  44/255)
+const TAUPE   = rgb(184/255, 149/255, 106/255)
+const GRAY    = rgb(140/255, 136/255, 128/255)
+const LIGHT   = rgb(232/255, 228/255, 223/255)
+const WHITE   = rgb(1, 1, 1)
 
+function hex(h: string) {
+  return rgb(parseInt(h.slice(1,3),16)/255, parseInt(h.slice(3,5),16)/255, parseInt(h.slice(5,7),16)/255)
+}
+
+// ── Text wrapping ─────────────────────────────────────────────────────────────
+function wrap(text: string, font: PDFFont, size: number, maxW: number): string[] {
+  const lines: string[] = []
+  let line = ''
+  for (const word of text.split(' ')) {
+    const test = line ? `${line} ${word}` : word
+    if (font.widthOfTextAtSize(test, size) > maxW && line) {
+      lines.push(line); line = word
+    } else { line = test }
+  }
+  if (line) lines.push(line)
+  return lines
+}
+
+function drawWrapped(
+  page: PDFPage, text: string, font: PDFFont, size: number,
+  x: number, y: number, maxW: number, color = CHARCOAL, leading = 1.45
+): number {
+  let curY = y
+  for (const line of wrap(text, font, size, maxW)) {
+    page.drawText(line, { x, y: curY, size, font, color })
+    curY -= size * leading
+  }
+  return y - curY
+}
+
+function wrappedHeight(text: string, font: PDFFont, size: number, maxW: number, leading = 1.45): number {
+  return wrap(text, font, size, maxW).length * size * leading
+}
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 export type PDFProps = {
   score: number
   label: string
@@ -17,142 +53,142 @@ export type PDFProps = {
   bonusAnswer: string
 }
 
+// ── Main generator ────────────────────────────────────────────────────────────
 export async function generateResultsPDF(props: PDFProps): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    const doc = new PDFDocument({
-      size: 'A4',
-      margin: 56,
-      info: { Title: 'Grundriss-Check Ergebnisse', Author: 'Haus Momster' },
-    })
+  const doc  = await PDFDocument.create()
+  const W    = 595.28   // A4 width  (pt)
+  const H    = 841.89   // A4 height (pt)
+  const M    = 52       // margin
+  const CW   = W - M*2  // content width
 
-    const chunks: Buffer[] = []
-    doc.on('data', (c: Buffer) => chunks.push(c))
-    doc.on('end', () => resolve(Buffer.concat(chunks)))
-    doc.on('error', reject)
+  const serif  = await doc.embedFont(StandardFonts.TimesRoman)
+  const sans   = await doc.embedFont(StandardFonts.Helvetica)
+  const italic = await doc.embedFont(StandardFonts.HelveticaOblique)
 
-    const W = doc.page.width
-    const M = 56
-    const CW = W - M * 2
+  let page = doc.addPage([W, H])
+  page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: CREAM })
 
-    // Cream background
-    doc.rect(0, 0, W, doc.page.height).fill(CREAM)
+  // ── Top y position (pdf-lib: y=0 is bottom) ───────────────────────────────
+  let y = H - M   // current top cursor
 
-    // ── Header ────────────────────────────────────────────────────────────
-    doc.font('Times-Roman').fontSize(22).fillColor(CHARCOAL).text('Grundriss-Check', M, 56)
-    doc.font('Helvetica').fontSize(10).fillColor(WARM_GRAY).text('von Haus Momster', M, 83)
-    doc.moveTo(M, 103).lineTo(W - M, 103).strokeColor(LIGHT).lineWidth(1).stroke()
+  // ── Header ────────────────────────────────────────────────────────────────
+  page.drawText('Grundriss-Check', { x: M, y, font: serif, size: 22, color: CHARCOAL })
+  y -= 20
+  page.drawText('von Haus Momster', { x: M, y, font: sans, size: 10, color: GRAY })
+  y -= 14
+  page.drawLine({ start: { x: M, y }, end: { x: W-M, y }, thickness: 0.75, color: LIGHT })
+  y -= 20
 
-    // ── Score circle ──────────────────────────────────────────────────────
-    let y = 118
-    const cx = M + 44
-    const cy = y + 44
+  // ── Score circle ──────────────────────────────────────────────────────────
+  const circleR = 38
+  const cx = M + circleR + 2
+  const cy = y - circleR         // centre y
 
-    doc.circle(cx, cy, 40).lineWidth(3).strokeColor(props.labelColor).stroke()
+  const lc = hex(props.labelColor)
 
-    const scoreStr = String(props.score)
-    doc.font('Times-Roman').fontSize(26).fillColor(props.labelColor)
-    doc.text(scoreStr, cx - 40, cy - 16, { width: 80, align: 'center' })
-    doc.font('Helvetica').fontSize(9).fillColor(WARM_GRAY)
-    doc.text('/ 100', cx - 40, cy + 12, { width: 80, align: 'center' })
+  page.drawCircle({ x: cx, y: cy, size: circleR, borderColor: lc, borderWidth: 3, color: CREAM })
 
-    // ── Label + headline + subline ────────────────────────────────────────
-    const tx = M + 100
-    const tw = CW - 100
+  const scoreStr = String(props.score)
+  const scoreW   = serif.widthOfTextAtSize(scoreStr, 26)
+  page.drawText(scoreStr, { x: cx - scoreW/2, y: cy + 4, font: serif, size: 26, color: lc })
+  const subW = sans.widthOfTextAtSize('/ 100', 9)
+  page.drawText('/ 100', { x: cx - subW/2, y: cy - 14, font: sans, size: 9, color: GRAY })
 
-    doc.font('Helvetica').fontSize(8).fillColor(props.labelColor)
-      .text(props.label.toUpperCase(), tx, y + 4, { width: tw, characterSpacing: 1.5 })
+  // ── Label + headline + subline ────────────────────────────────────────────
+  const tx = M + circleR*2 + 16
+  const tw = CW - circleR*2 - 16
 
-    doc.font('Times-Roman').fontSize(14).fillColor(CHARCOAL)
-      .text(props.headline, tx, y + 18, { width: tw })
+  let ty = y - 6
+  page.drawText(props.label.toUpperCase(), { x: tx, y: ty, font: sans, size: 8, color: lc, characterSpacing: 1.2 })
+  ty -= 14
+  const hh = drawWrapped(page, props.headline, serif, 13, tx, ty, tw, CHARCOAL)
+  ty -= hh + 4
+  drawWrapped(page, props.subline, sans, 9.5, tx, ty, tw, GRAY)
 
-    const hh = doc.heightOfString(props.headline, { width: tw })
+  y = cy - circleR - 24  // move below circle
 
-    doc.font('Helvetica').fontSize(10).fillColor(WARM_GRAY)
-      .text(props.subline, tx, y + 22 + hh, { width: tw })
+  // ── Recommendations ───────────────────────────────────────────────────────
+  if (props.recommendations.length > 0) {
+    page.drawText('Deine Empfehlungen', { x: M, y, font: serif, size: 13, color: CHARCOAL })
+    y -= 18
 
-    y = cy + 44 + 24
+    for (const rec of props.recommendations) {
+      const th  = wrappedHeight(rec.text, sans, 9.5, CW - 24)
+      const cardH = th + 34
 
-    // ── Recommendations ───────────────────────────────────────────────────
-    if (props.recommendations.length > 0) {
-      doc.font('Times-Roman').fontSize(13).fillColor(CHARCOAL).text('Deine Empfehlungen', M, y)
-      y += 20
-
-      for (const rec of props.recommendations) {
-        const rh = doc.heightOfString(rec.text, { width: CW - 24 })
-        const cardH = rh + 36
-
-        if (y + cardH > doc.page.height - M - 30) {
-          doc.addPage()
-          doc.rect(0, 0, W, doc.page.height).fill(CREAM)
-          y = M
-        }
-
-        doc.roundedRect(M, y, CW, cardH, 4).fillAndStroke(WHITE, LIGHT)
-        doc.font('Helvetica').fontSize(8).fillColor(WARM_GRAY)
-          .text(rec.blockTitle.toUpperCase(), M + 12, y + 10, { characterSpacing: 1 })
-        doc.font('Helvetica').fontSize(10).fillColor(CHARCOAL)
-          .text(rec.text, M + 12, y + 23, { width: CW - 24 })
-
-        y += cardH + 8
-      }
-    }
-
-    // ── Bonus answer ──────────────────────────────────────────────────────
-    if (props.bonusAnswer) {
-      const bh = doc.heightOfString(`"${props.bonusAnswer}"`, { width: CW - 20 })
-      const blockH = bh + 34
-
-      if (y + blockH > doc.page.height - M - 30) {
-        doc.addPage()
-        doc.rect(0, 0, W, doc.page.height).fill(CREAM)
-        y = M
+      if (y - cardH < M + 80) {
+        page = doc.addPage([W, H])
+        page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: CREAM })
+        y = H - M
       }
 
-      doc.rect(M, y, 2, blockH).fill(TAUPE)
-      doc.font('Helvetica').fontSize(8).fillColor(WARM_GRAY)
-        .text('DEINE GRÖSSTE UNSICHERHEIT', M + 12, y + 4, { characterSpacing: 1 })
-      doc.font('Helvetica-Oblique').fontSize(10).fillColor(CHARCOAL)
-        .text(`"${props.bonusAnswer}"`, M + 12, y + 18, { width: CW - 20 })
+      const cardY = y - cardH
+      page.drawRectangle({ x: M, y: cardY, width: CW, height: cardH, color: WHITE, borderColor: LIGHT, borderWidth: 1 })
+      page.drawText(rec.blockTitle.toUpperCase(), { x: M+12, y: y-14, font: sans, size: 7.5, color: GRAY, characterSpacing: 0.8 })
+      drawWrapped(page, rec.text, sans, 9.5, M+12, y-26, CW-24, CHARCOAL)
 
-      y += blockH + 16
+      y -= cardH + 8
+    }
+  }
+
+  // ── Bonus answer ──────────────────────────────────────────────────────────
+  if (props.bonusAnswer) {
+    const bh  = wrappedHeight(`"${props.bonusAnswer}"`, italic, 10, CW - 18)
+    const blockH = bh + 32
+
+    if (y - blockH < M + 120) {
+      page = doc.addPage([W, H])
+      page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: CREAM })
+      y = H - M
     }
 
-    // ── CTA box ───────────────────────────────────────────────────────────
-    const ctaH = 112
-    if (y + ctaH > doc.page.height - M - 30) {
-      doc.addPage()
-      doc.rect(0, 0, W, doc.page.height).fill(CREAM)
-      y = M
-    }
+    page.drawRectangle({ x: M, y: y - blockH, width: 2, height: blockH, color: TAUPE })
+    page.drawText('DEINE GRÖSSTE UNSICHERHEIT', { x: M+12, y: y-12, font: sans, size: 7.5, color: GRAY, characterSpacing: 0.8 })
+    drawWrapped(page, `"${props.bonusAnswer}"`, italic, 10, M+12, y-26, CW-18, CHARCOAL)
 
-    doc.roundedRect(M, y, CW, ctaH, 4).fillAndStroke(WHITE, TAUPE)
+    y -= blockH + 20
+  }
 
-    doc.font('Helvetica').fontSize(8).fillColor(TAUPE)
-      .text('NÄCHSTER SCHRITT', M, y + 14, { width: W, align: 'center', characterSpacing: 1.5 })
+  // ── CTA box ───────────────────────────────────────────────────────────────
+  const ctaH = 118
+  if (y - ctaH < M + 30) {
+    page = doc.addPage([W, H])
+    page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: CREAM })
+    y = H - M
+  }
 
-    doc.font('Times-Roman').fontSize(14).fillColor(CHARCOAL)
-      .text('Genau dafür ist mein Ask Me Anything.', M, y + 30, { width: W, align: 'center' })
+  const ctaY = y - ctaH
+  page.drawRectangle({ x: M, y: ctaY, width: CW, height: ctaH, color: WHITE, borderColor: TAUPE, borderWidth: 1 })
 
-    doc.font('Helvetica').fontSize(9).fillColor(WARM_GRAY)
-      .text(
-        'Ich würde dir gerne dabei helfen, um Räume zu schaffen, in denen du dich wohl fühlst.',
-        M, y + 50, { width: W, align: 'center' }
-      )
+  const ctaLabel = 'NÄCHSTER SCHRITT'
+  const ctaLabelW = sans.widthOfTextAtSize(ctaLabel, 8)
+  page.drawText(ctaLabel, { x: W/2 - ctaLabelW/2, y: y-16, font: sans, size: 8, color: TAUPE, characterSpacing: 1.2 })
 
-    const btnW = 160
-    const btnX = (W - btnW) / 2
-    doc.roundedRect(btnX, y + 72, btnW, 26, 2).fill(TAUPE)
-    doc.font('Helvetica').fontSize(10).fillColor(WHITE)
-      .text('Ask me anything →', btnX, y + 79, { width: btnW, align: 'center' })
+  const ctaHead = 'Genau dafür ist mein Ask Me Anything.'
+  const ctaHeadW = serif.widthOfTextAtSize(ctaHead, 13)
+  page.drawText(ctaHead, { x: W/2 - ctaHeadW/2, y: y-32, font: serif, size: 13, color: CHARCOAL })
 
-    // ── Footer ────────────────────────────────────────────────────────────
-    const fy = doc.page.height - M - 18
-    doc.moveTo(M, fy - 8).lineTo(W - M, fy - 8).strokeColor(LIGHT).lineWidth(1).stroke()
-    doc.font('Helvetica').fontSize(8).fillColor(WARM_GRAY)
-      .text('Lejla · @haus_momster', M, fy, { width: CW / 2 })
-    doc.font('Helvetica').fontSize(8).fillColor(WARM_GRAY)
-      .text('grundriss-check-hm.vercel.app', M, fy, { width: CW, align: 'right' })
+  const ctaBody = 'Ich würde dir gerne dabei helfen, um Räume zu schaffen, in denen du dich wohl fühlst.'
+  drawWrapped(page, ctaBody, sans, 9, M+20, y-50, CW-40, GRAY)
 
-    doc.end()
-  })
+  const btnW = 150; const btnH = 26
+  const btnX = W/2 - btnW/2
+  const btnY = ctaY + 12
+  page.drawRectangle({ x: btnX, y: btnY, width: btnW, height: btnH, color: TAUPE })
+  const btnText = 'Ask me anything →'
+  const btnTextW = sans.widthOfTextAtSize(btnText, 10)
+  page.drawText(btnText, { x: W/2 - btnTextW/2, y: btnY + 8, font: sans, size: 10, color: WHITE })
+
+  y = ctaY - 20
+
+  // ── Footer ────────────────────────────────────────────────────────────────
+  const fy = M + 18
+  page.drawLine({ start: { x: M, y: fy+10 }, end: { x: W-M, y: fy+10 }, thickness: 0.75, color: LIGHT })
+  page.drawText('Lejla · @haus_momster', { x: M, y: fy-4, font: sans, size: 8, color: GRAY })
+  const urlText = 'grundriss-check-hm.vercel.app'
+  const urlW = sans.widthOfTextAtSize(urlText, 8)
+  page.drawText(urlText, { x: W-M-urlW, y: fy-4, font: sans, size: 8, color: GRAY })
+
+  const bytes = await doc.save()
+  return Buffer.from(bytes)
 }
