@@ -573,8 +573,8 @@ export const questions: Question[] = [
         label: { de: 'Teilweise', en: 'Partly' },
         points: 3,
         recommendation: {
-          de: 'Versuche, Eltern- und Kinderzimmer auf dieselbe Ebene zu bringen. Nächtliche Wege über Treppen oder durch den halben Grundriss werden schnell zum Dauerproblem.',
-          en: 'Try to bring parents\' and children\'s rooms to the same floor. Nightly trips across stairs or through half the floor plan quickly become a persistent issue.',
+          de: 'Kurze Wege sind vor allem in den ersten Jahren entscheidend – nachts zu einem Kleinkind über Treppen zu müssen, wird schnell zur Belastung. Plane Eltern- und Kinderzimmer auf derselben Ebene, aber nicht Wand an Wand: Ein kleiner Flur oder ein Bad dazwischen gibt später – wenn Kinder Teenager werden – natürliche Distanz und akustische Privatsphäre für beide Seiten. Du planst heute für die nächsten 20 Jahre.',
+          en: "Short distances matter most in the early years — having to climb stairs to a toddler at night quickly becomes exhausting. Plan parents' and children's rooms on the same floor, but not wall to wall: a small hallway or bathroom in between gives natural distance and acoustic privacy later, when children become teenagers and both sides need their own space. You are planning today for the next 20 years.",
         },
       },
       {
@@ -582,8 +582,8 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Lange Wege nachts mit Kindern sind Alltag für viele Jahre. Plane Eltern- und Kinderzimmer auf derselben Ebene, möglichst nebeneinander oder mit direkter Verbindung.',
-          en: "Long nightly trips with children are everyday life for many years. Plan parents' and children's rooms on the same floor, ideally next to each other or with a direct connection.",
+          de: 'Verschiedene Ebenen für Eltern- und Kinderzimmer bedeuten in den ersten Lebensjahren nächtliche Treppengänge – das summiert sich über Monate und Jahre erheblich. Gleichzeitig gilt: völlige Nähe ist langfristig auch nicht ideal. Teenagers brauchen Abstand und Privatsphäre – und Eltern auch. Das optimale Layout liegt auf derselben Ebene, mit einem natürlichen Puffer wie Flur, Bad oder Abstellraum dazwischen. Wenn eine Ebenenänderung nicht vermeidbar ist, lohnt sich zumindest ein Babyfon-System oder eine temporäre Lösung für die ersten Jahre einzuplanen.',
+          en: "Separate floors for parents and children mean nightly stair trips in the early years — that adds up significantly over months and years. At the same time, being too close is not ideal long-term either. Teenagers need distance and privacy — and so do parents. The optimal layout is on the same floor with a natural buffer like a hallway, bathroom, or storage room in between. If a floor change is unavoidable, at least plan for a monitor system or a temporary solution for the first years.",
         },
       },
     ],
