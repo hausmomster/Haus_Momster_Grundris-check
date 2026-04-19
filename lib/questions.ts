@@ -181,8 +181,8 @@ export const questions: Question[] = [
         label: { de: 'Weiß ich nicht', en: "I don't know" },
         points: 3,
         recommendation: {
-          de: 'Miss das sofort nach – es ist eine der wichtigsten Maßzahlen deines Grundrisses. Standard ist mindestens 90 cm, empfohlen sind 110 cm.',
-          en: 'Measure this right away – it\'s one of the most important dimensions of your floor plan. Standard is at least 90 cm, recommended is 110 cm.',
+          de: 'Miss die Breite der Hauptdurchgänge sofort nach – das ist eine der wichtigsten Maßzahlen deines Grundrisses. Standard sind mindestens 90 cm, empfohlen 110 cm.',
+          en: 'Measure the width of the main passages right away – it is one of the most important dimensions in your floor plan. Standard is at least 90 cm, recommended is 110 cm.',
         },
       },
     ],
@@ -302,8 +302,8 @@ export const questions: Question[] = [
         label: { de: 'Unter 100 cm', en: 'Under 100 cm' },
         points: 0,
         recommendation: {
-          de: 'Kritisch: Unter 100 cm ist dies einer der häufigsten und folgenschwersten Planungsfehler. Die Küche wird im Alltag zur Engstelle. Sofort umplanen.',
-          en: 'Critical: Under 100 cm, this is one of the most common and consequential planning errors. The kitchen becomes a bottleneck in everyday use. Replan immediately.',
+          de: 'Kritisch: Ein Abstand von unter 100 cm zwischen Küche und Insel ist einer der häufigsten und folgenschwersten Planungsfehler. Zwei Personen können nicht gleichzeitig in der Küche arbeiten, ohne sich ständig im Weg zu stehen. Sofort umplanen – Ziel sind mindestens 120 cm.',
+          en: 'Critical: A clearance of under 100 cm between the kitchen counter and island is one of the most common and consequential planning errors. Two people cannot work in the kitchen at the same time without constantly being in each other\'s way. Replan immediately – aim for at least 120 cm.',
         },
       },
       {
@@ -321,8 +321,8 @@ export const questions: Question[] = [
         label: { de: 'Weiß ich nicht / keine Insel', en: "Don't know / no island" },
         points: 3,
         recommendation: {
-          de: 'Falls du eine Insel planst: Miss diesen Abstand sofort nach. Mindestens 100 cm, besser 120 cm sind Standard.',
-          en: 'If you\'re planning an island: measure this distance right away. At least 100 cm, preferably 120 cm is standard.',
+          de: 'Falls du eine Kücheninsel planst: Miss den Abstand zwischen Insel und Küchenzeile sofort nach. Mindestens 100 cm, besser 120 cm – alles darunter wird im Alltag zur Engstelle.',
+          en: 'If you are planning a kitchen island: measure the clearance between the island and the kitchen counter right away. At least 100 cm, preferably 120 cm – anything less becomes a bottleneck in daily use.',
         },
       },
     ],
@@ -472,8 +472,8 @@ export const questions: Question[] = [
         label: { de: 'Teilweise', en: 'Partly' },
         points: 4,
         recommendation: {
-          de: 'Lege beide Hauptmöbel jetzt fest. Sie bestimmen die Positionen von Steckdosen, Lichtpunkten und Türen – Änderungen danach sind teuer.',
-          en: 'Fix both main furniture pieces now. They determine the positions of sockets, light points and doors – changes after that are expensive.',
+          de: 'Lege jetzt fest, wo Sofa und Esstisch stehen werden. Diese beiden Möbel bestimmen die Positionen von Steckdosen, Lichtpunkten und Türen – wer das offen lässt, riskiert teure Nacharbeiten in der Elektroplanung.',
+          en: 'Decide now where the sofa and dining table will go. These two pieces of furniture determine the positions of sockets, light points and doors – leaving this open risks costly changes to the electrical planning later.',
         },
       },
       {
@@ -481,8 +481,8 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Ohne festgelegte Möbelplatzierung riskierst du Fensterpositionen ohne Wandfläche, falsch gesetzte Steckdosen und Lichtschalter. Erstelle einen Möblierungsplan im Maßstab 1:50.',
-          en: 'Without defined furniture placement, you risk window positions without wall space, wrongly placed sockets and light switches. Create a furniture plan at scale 1:50.',
+          de: 'Ohne festgelegte Position für Sofa und Esstisch riskierst du Fenster dort, wo Möbel stehen sollen, und Steckdosen an der falschen Wand. Erstelle einen Möblierungsplan im Maßstab 1:50 – das ist der einzige Weg, Fehler zu erkennen bevor sie gebaut sind.',
+          en: 'Without a fixed position for the sofa and dining table, you risk windows where furniture should stand and sockets on the wrong wall. Create a furniture plan at 1:50 scale – that is the only way to spot mistakes before they are built.',
         },
       },
     ],
