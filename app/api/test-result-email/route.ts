@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
-import { renderToBuffer, type DocumentProps } from '@react-pdf/renderer'
-import React from 'react'
-import { ResultsPDF } from '@/lib/generate-pdf'
+import { generateResultsPDF } from '@/lib/generate-pdf'
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -42,11 +40,9 @@ export async function GET(req: NextRequest) {
     },
   ]
 
-  const pdfBuffer = await renderToBuffer(
-    React.createElement(ResultsPDF, {
-      score, label, labelColor, headline, subline, recommendations, bonusAnswer,
-    }) as unknown as React.ReactElement<DocumentProps>
-  )
+  const pdfBuffer = await generateResultsPDF({
+    score, label, labelColor, headline, subline, recommendations, bonusAnswer,
+  })
 
   await transporter.sendMail({
     from: `"Haus Momster" <${process.env.GMAIL_USER}>`,
