@@ -8,7 +8,7 @@ import { computeScore, type Answers, type ScoreResult } from '@/lib/scoring'
 
 // ─── Token gate ───────────────────────────────────────────────────────────────
 
-type GateState = 'loading' | 'valid' | 'invalid' | 'expired'
+type GateState = 'loading' | 'valid' | 'invalid' | 'expired' | 'completed'
 
 function useTokenGate(token: string | null) {
   const [state, setState] = useState<GateState>('loading')
@@ -52,8 +52,12 @@ function useTokenGate(token: string | null) {
         if (data.valid) {
           setState('valid')
           startHeartbeat()
+        } else if (data.reason === 'expired') {
+          setState('expired')
+        } else if (data.reason === 'completed') {
+          setState('completed')
         } else {
-          setState(data.reason === 'expired' ? 'expired' : 'invalid')
+          setState('invalid')
         }
       })
       .catch(() => setState('invalid'))
@@ -206,6 +210,13 @@ function Quiz() {
         finalAnswers[currentQ.id] = textInput.trim()
       }
       setResult(computeScore(finalAnswers, lang))
+      if (token && token !== 'dev') {
+        fetch('/api/complete-token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token }),
+        })
+      }
       return
     }
     if (currentQ.type === 'text') {
@@ -270,6 +281,27 @@ function Quiz() {
             {t(
               'Dieser Link ist ungültig. Bitte prüfe deine E-Mail oder kaufe erneut.',
               'This link is invalid. Please check your email or purchase again.'
+            )}
+          </p>
+          <a href="/" className="btn-primary">
+            {t('Zur Startseite', 'Go to homepage')}
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  if (gateState === 'completed') {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center px-6">
+        <div className="text-center max-w-md">
+          <p className="font-serif text-4xl text-charcoal mb-4">
+            {t('Check abgeschlossen', 'Check Completed')}
+          </p>
+          <p className="font-sans text-warm-gray mb-8">
+            {t(
+              'Du hast diesen Grundriss-Check bereits abgeschlossen. Jeder Link kann nur einmal verwendet werden.',
+              'You have already completed this floor plan check. Each link can only be used once.'
             )}
           </p>
           <a href="/" className="btn-primary">

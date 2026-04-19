@@ -6,7 +6,7 @@ create table if not exists access_tokens (
   order_id     text not null,
   email        text not null,
   status       text not null default 'unused'
-               check (status in ('unused', 'active', 'expired')),
+               check (status in ('unused', 'active', 'expired', 'completed')),
   created_at   timestamptz not null default now(),
   activated_at timestamptz,
   last_heartbeat timestamptz

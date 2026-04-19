@@ -5,7 +5,7 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
 export const supabase = createClient(supabaseUrl, supabaseKey)
 
-export type TokenStatus = 'unused' | 'active' | 'expired'
+export type TokenStatus = 'unused' | 'active' | 'expired' | 'completed'
 
 export type AccessToken = {
   id: string
@@ -35,6 +35,7 @@ export async function validateToken(token: string): Promise<{
   const row = data as AccessToken
 
   if (row.status === 'expired') return { valid: false, reason: 'expired' }
+  if (row.status === 'completed') return { valid: false, reason: 'completed' }
 
   if (row.status === 'active') {
     const lastBeat = row.last_heartbeat ? new Date(row.last_heartbeat).getTime() : 0
@@ -64,9 +65,16 @@ export async function recordHeartbeat(token: string): Promise<boolean> {
     .from('access_tokens')
     .update({ last_heartbeat: new Date().toISOString() })
     .eq('token', token)
-    .eq('status', 'active')
+    .in('status', ['active', 'completed'])
 
   return !error
+}
+
+export async function completeToken(token: string): Promise<void> {
+  await supabase
+    .from('access_tokens')
+    .update({ status: 'completed' })
+    .eq('token', token)
 }
 
 export async function expireToken(token: string): Promise<void> {
