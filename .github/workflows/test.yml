@@ -19,4 +19,8 @@ jobs:
 
       - run: npm ci
 
-      - run: npm test
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Tests
+        run: npm test
