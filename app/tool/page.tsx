@@ -91,7 +91,61 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
 
 // ─── Score result view ────────────────────────────────────────────────────────
 
-function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () => void }) {
+function ContactForm({ token }: { token: string | null }) {
+  const { t } = useI18n()
+  const [email, setEmail] = useState('')
+  const [instagram, setInstagram] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email && !instagram) return
+    if (token && token !== 'dev') {
+      await fetch('/api/save-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, contactEmail: email || undefined, instagramHandle: instagram || undefined }),
+      })
+    }
+    setSubmitted(true)
+  }
+
+  if (submitted) {
+    return (
+      <p className="font-sans text-sm text-taupe text-center py-2">
+        {t('Danke – ich melde mich bei dir!', 'Thank you – I will be in touch!')}
+      </p>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <input
+        type="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder={t('E-Mail-Adresse (optional)', 'Email address (optional)')}
+        className="w-full border border-warm-gray-light rounded-xl px-4 py-3 font-sans text-sm text-charcoal placeholder-warm-gray focus:outline-none focus:ring-2 focus:ring-taupe bg-white"
+      />
+      <input
+        type="text"
+        value={instagram}
+        onChange={e => setInstagram(e.target.value)}
+        placeholder={t('Instagram-Handle, z.B. @haus_momster (optional)', 'Instagram handle, e.g. @haus_momster (optional)')}
+        className="w-full border border-warm-gray-light rounded-xl px-4 py-3 font-sans text-sm text-charcoal placeholder-warm-gray focus:outline-none focus:ring-2 focus:ring-taupe bg-white"
+      />
+      <button
+        type="submit"
+        disabled={!email && !instagram}
+        className={`btn-primary w-full ${!email && !instagram ? 'opacity-40 cursor-not-allowed' : ''}`}
+      >
+        {t('Senden', 'Submit')}
+      </button>
+    </form>
+  )
+}
+
+function ResultView({ result, token, onRestart }: { result: ScoreResult; token: string | null; onRestart: () => void }) {
   const { t } = useI18n()
 
   return (
@@ -146,13 +200,22 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
         </div>
       )}
 
-      {/* Bonus answer */}
+      {/* Bonus answer + contact opt-in */}
       {result.bonusAnswer && (
-        <div className="border-l-2 border-taupe pl-5">
-          <p className="font-sans text-xs tracking-widest uppercase text-warm-gray mb-2">
-            {t('Deine größte Unsicherheit', 'Your biggest concern')}
+        <div className="rounded-xl border border-warm-gray-light bg-white p-6 space-y-5">
+          <div className="border-l-2 border-taupe pl-4">
+            <p className="font-sans text-xs tracking-widest uppercase text-warm-gray mb-2">
+              {t('Deine größte Unsicherheit', 'Your biggest concern')}
+            </p>
+            <p className="font-sans text-charcoal italic">"{result.bonusAnswer}"</p>
+          </div>
+          <p className="font-sans text-sm text-warm-gray leading-relaxed">
+            {t(
+              'Genau darüber können wir im persönlichen Ask Me Anything sprechen. Hinterlasse deine E-Mail oder deinen Instagram-Handle – ich melde mich bei dir.',
+              'We can talk about exactly this in a personal Ask Me Anything session. Leave your email or Instagram handle and I will reach out to you.'
+            )}
           </p>
-          <p className="font-sans text-charcoal italic">"{result.bonusAnswer}"</p>
+          <ContactForm token={token} />
         </div>
       )}
 
@@ -250,12 +313,25 @@ function Quiz() {
       if (currentQ.type === 'text' && textInput.trim()) {
         finalAnswers[currentQ.id] = textInput.trim()
       }
-      setResult(computeScore(finalAnswers, lang))
+      const scored = computeScore(finalAnswers, lang)
+      setResult(scored)
       if (token && token !== 'dev') {
         fetch('/api/complete-token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token }),
+        })
+        fetch('/api/save-result', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token,
+            score: scored.total,
+            label: scored.label,
+            answers: finalAnswers,
+            recommendations: scored.recommendations,
+            bonusAnswer: scored.bonusAnswer,
+          }),
         })
       }
       return
@@ -382,7 +458,7 @@ function Quiz() {
 
       <main className="max-w-2xl mx-auto px-6 pb-20">
         {result ? (
-          <ResultView result={result} onRestart={() => {}} />
+          <ResultView result={result} token={token} onRestart={() => {}} />
         ) : (
           <>
             <div className="mb-8">

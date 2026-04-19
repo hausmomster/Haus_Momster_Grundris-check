@@ -83,3 +83,43 @@ export async function expireToken(token: string): Promise<void> {
     .update({ status: 'expired' })
     .eq('token', token)
 }
+
+export async function saveQuizResult(params: {
+  token: string
+  score: number
+  label: string
+  answers: Record<number, string>
+  recommendations: { questionId: number; blockTitle: string; text: string; pointsLost: number }[]
+  bonusAnswer: string
+}): Promise<void> {
+  // Fetch shopify email from access_tokens
+  const { data } = await supabase
+    .from('access_tokens')
+    .select('email')
+    .eq('token', params.token)
+    .single()
+
+  await supabase.from('quiz_results').upsert({
+    token: params.token,
+    shopify_email: data?.email ?? null,
+    score: params.score,
+    label: params.label,
+    answers: params.answers,
+    recommendations: params.recommendations,
+    bonus_answer: params.bonusAnswer || null,
+  }, { onConflict: 'token' })
+}
+
+export async function saveContact(params: {
+  token: string
+  contactEmail?: string
+  instagramHandle?: string
+}): Promise<void> {
+  await supabase
+    .from('quiz_results')
+    .update({
+      contact_email: params.contactEmail || null,
+      instagram_handle: params.instagramHandle || null,
+    })
+    .eq('token', params.token)
+}

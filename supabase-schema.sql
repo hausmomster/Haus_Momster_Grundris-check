@@ -17,3 +17,23 @@ create index if not exists idx_access_tokens_token on access_tokens(token);
 
 -- No public access – only service role can read/write
 alter table access_tokens enable row level security;
+
+-- ── Quiz results ──────────────────────────────────────────────────────────────
+create table if not exists quiz_results (
+  id               uuid primary key default gen_random_uuid(),
+  token            text not null references access_tokens(token),
+  shopify_email    text,
+  score            integer not null,
+  label            text not null,
+  answers          jsonb not null,
+  recommendations  jsonb not null,
+  bonus_answer     text,
+  contact_email    text,
+  instagram_handle text,
+  created_at       timestamptz not null default now(),
+  unique (token)
+);
+
+create index if not exists idx_quiz_results_token on quiz_results(token);
+
+alter table quiz_results enable row level security;
