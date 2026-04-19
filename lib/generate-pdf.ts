@@ -99,7 +99,7 @@ export async function generateResultsPDF(props: PDFProps): Promise<Buffer> {
   const tw = CW - circleR*2 - 16
 
   let ty = y - 6
-  page.drawText(props.label.toUpperCase(), { x: tx, y: ty, font: sans, size: 8, color: lc, characterSpacing: 1.2 })
+  page.drawText(props.label.toUpperCase(), { x: tx, y: ty, font: sans, size: 8, color: lc })
   ty -= 14
   const hh = drawWrapped(page, props.headline, serif, 13, tx, ty, tw, CHARCOAL)
   ty -= hh + 4
@@ -124,7 +124,7 @@ export async function generateResultsPDF(props: PDFProps): Promise<Buffer> {
 
       const cardY = y - cardH
       page.drawRectangle({ x: M, y: cardY, width: CW, height: cardH, color: WHITE, borderColor: LIGHT, borderWidth: 1 })
-      page.drawText(rec.blockTitle.toUpperCase(), { x: M+12, y: y-14, font: sans, size: 7.5, color: GRAY, characterSpacing: 0.8 })
+      page.drawText(rec.blockTitle.toUpperCase(), { x: M+12, y: y-14, font: sans, size: 7.5, color: GRAY })
       drawWrapped(page, rec.text, sans, 9.5, M+12, y-26, CW-24, CHARCOAL)
 
       y -= cardH + 8
@@ -143,7 +143,7 @@ export async function generateResultsPDF(props: PDFProps): Promise<Buffer> {
     }
 
     page.drawRectangle({ x: M, y: y - blockH, width: 2, height: blockH, color: TAUPE })
-    page.drawText('DEINE GRÖSSTE UNSICHERHEIT', { x: M+12, y: y-12, font: sans, size: 7.5, color: GRAY, characterSpacing: 0.8 })
+    page.drawText('DEINE GRÖSSTE UNSICHERHEIT', { x: M+12, y: y-12, font: sans, size: 7.5, color: GRAY })
     drawWrapped(page, `"${props.bonusAnswer}"`, italic, 10, M+12, y-26, CW-18, CHARCOAL)
 
     y -= blockH + 20
@@ -162,7 +162,7 @@ export async function generateResultsPDF(props: PDFProps): Promise<Buffer> {
 
   const ctaLabel = 'NÄCHSTER SCHRITT'
   const ctaLabelW = sans.widthOfTextAtSize(ctaLabel, 8)
-  page.drawText(ctaLabel, { x: W/2 - ctaLabelW/2, y: y-16, font: sans, size: 8, color: TAUPE, characterSpacing: 1.2 })
+  page.drawText(ctaLabel, { x: W/2 - ctaLabelW/2, y: y-16, font: sans, size: 8, color: TAUPE })
 
   const ctaHead = 'Genau dafür ist mein Ask Me Anything.'
   const ctaHeadW = serif.widthOfTextAtSize(ctaHead, 13)
