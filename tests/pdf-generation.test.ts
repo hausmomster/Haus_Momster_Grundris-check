@@ -99,7 +99,7 @@ describe('generateResultsPDF() – all recommendation texts from questions.ts', 
   for (const q of allQuestions) {
     if (seen.has(q.id)) continue
     seen.add(q.id)
-    for (const opt of q.options) {
+    for (const opt of q.options ?? []) {
       if (opt.recommendation) {
         allRecs.push({ questionId: q.id, blockTitle: q.blockTitle.de, text: opt.recommendation.de })
         allRecs.push({ questionId: q.id, blockTitle: q.blockTitle.en, text: opt.recommendation.en })
