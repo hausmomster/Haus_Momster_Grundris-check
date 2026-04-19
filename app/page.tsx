@@ -133,11 +133,11 @@ function LandingContent() {
         <h2 className="font-serif text-3xl text-charcoal mb-2 text-center">
           {t('Die 9 Prüfbereiche', 'The 9 check areas')}
         </h2>
-        <p className="font-sans text-warm-gray text-center mb-12">
+        <p className="font-sans text-warm-gray text-center mb-16">
           {t('20 Fragen · Score 0–100 · Konkrete Empfehlungen', '20 questions · Score 0–100 · Concrete recommendations')}
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="divide-y divide-warm-gray-light border-t border-warm-gray-light">
           {[
             { de: 'Basisinfos', en: 'Basic Info' },
             { de: 'Eingangsbereich', en: 'Entrance Area' },
@@ -148,12 +148,12 @@ function LandingContent() {
             { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
             { de: 'Badezimmer', en: 'Bathroom' },
             { de: 'Bonusfrage', en: 'Bonus Question' },
-          ].map((block) => (
-            <div
-              key={block.de}
-              className="flex items-center p-4 border border-warm-gray-light bg-white"
-            >
-              <span className="font-sans text-charcoal text-sm">{t(block.de, block.en)}</span>
+          ].map((block, i) => (
+            <div key={block.de} className="flex items-center gap-8 py-5">
+              <span className="font-serif text-3xl text-warm-gray-light w-12 flex-shrink-0 leading-none">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span className="font-sans text-charcoal tracking-wide">{t(block.de, block.en)}</span>
             </div>
           ))}
         </div>
