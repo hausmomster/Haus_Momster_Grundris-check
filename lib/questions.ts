@@ -555,6 +555,7 @@ export const questions: Question[] = [
         },
       },
       { value: 'over20', label: { de: 'Über 20 m²', en: 'Over 20 m²' }, points: 5 },
+      { value: 'skip', label: { de: 'Nicht zutreffend', en: 'Not applicable' }, points: 0 },
     ],
   },
   {
@@ -589,6 +590,7 @@ export const questions: Question[] = [
           en: "Separate floors for parents and children mean nightly stair trips in the early years — that adds up significantly over months and years. At the same time, being too close is not ideal long-term either. Teenagers need distance and privacy — and so do parents. The optimal layout is on the same floor with a natural buffer like a hallway, bathroom, or storage room in between. If a floor change is unavoidable, at least plan for a monitor system or a temporary solution for the first years.",
         },
       },
+      { value: 'skip', label: { de: 'Nicht zutreffend', en: 'Not applicable' }, points: 0 },
     ],
   },
 

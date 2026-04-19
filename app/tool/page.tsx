@@ -530,21 +530,6 @@ function Quiz() {
               </button>
             </div>
 
-            {/* Skip button — only for skippable questions */}
-            {currentQ.skippable && !answers[currentQ.id] && (
-              <div className="text-center mt-4">
-                <button
-                  onClick={() => {
-                    setAnswers(prev => ({ ...prev, [currentQ.id]: 'skip' }))
-                    setAnimKey(k => k + 1)
-                    setCurrentIndex(i => i + 1)
-                  }}
-                  className="font-sans text-sm text-warm-gray hover:text-charcoal transition-colors underline underline-offset-4"
-                >
-                  {t('Nicht zutreffend – überspringen', 'Not applicable – skip')}
-                </button>
-              </div>
-            )}
           </>
         )}
       </main>
