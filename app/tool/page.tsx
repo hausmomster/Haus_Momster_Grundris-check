@@ -123,7 +123,6 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
             {result.recommendations.map((rec) => (
               <div key={rec.questionId} className="border border-warm-gray-light bg-white p-5">
                 <div className="flex items-center gap-2 mb-2">
-                  <span>{rec.blockEmoji}</span>
                   <span className="font-sans text-xs tracking-widest uppercase text-warm-gray">
                     {rec.blockTitle}
                   </span>
@@ -319,7 +318,6 @@ function Quiz() {
             <div key={animKey} className="animate-slide-up">
               {/* Block label */}
               <div className="flex items-center gap-2 mb-6">
-                <span className="text-xl">{currentQ.blockEmoji}</span>
                 <span className="font-sans text-xs tracking-widest uppercase text-warm-gray">
                   {currentQ.blockTitle[lang]}
                 </span>

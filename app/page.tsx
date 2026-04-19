@@ -130,21 +130,20 @@ function LandingContent() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
-            { emoji: '🏠', de: 'Basisinfos', en: 'Basic Info' },
-            { emoji: '🚪', de: 'Eingangsbereich', en: 'Entrance Area' },
-            { emoji: '📏', de: 'Durchgänge', en: 'Corridors' },
-            { emoji: '🍳', de: 'Küche', en: 'Kitchen' },
-            { emoji: '📦', de: 'Stauraum', en: 'Storage' },
-            { emoji: '🛋️', de: 'Möblierbarkeit', en: 'Furniture Fit' },
-            { emoji: '👶', de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
-            { emoji: '🛁', de: 'Badezimmer', en: 'Bathroom' },
-            { emoji: '💬', de: 'Bonusfrage', en: 'Bonus Question' },
+            { de: 'Basisinfos', en: 'Basic Info' },
+            { de: 'Eingangsbereich', en: 'Entrance Area' },
+            { de: 'Durchgänge', en: 'Corridors' },
+            { de: 'Küche', en: 'Kitchen' },
+            { de: 'Stauraum', en: 'Storage' },
+            { de: 'Möblierbarkeit', en: 'Furniture Fit' },
+            { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
+            { de: 'Badezimmer', en: 'Bathroom' },
+            { de: 'Bonusfrage', en: 'Bonus Question' },
           ].map((block) => (
             <div
               key={block.de}
-              className="flex items-center gap-3 p-4 border border-warm-gray-light bg-white"
+              className="flex items-center p-4 border border-warm-gray-light bg-white"
             >
-              <span className="text-2xl">{block.emoji}</span>
               <span className="font-sans text-charcoal text-sm">{t(block.de, block.en)}</span>
             </div>
           ))}
