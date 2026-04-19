@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { saveQuizResult, supabase } from '@/lib/supabase'
 import nodemailer from 'nodemailer'
-import { renderToBuffer } from '@react-pdf/renderer'
+import { renderToBuffer, type DocumentProps } from '@react-pdf/renderer'
 import React from 'react'
 import { ResultsPDF } from '@/lib/generate-pdf'
 
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         subline: subline ?? '',
         recommendations: recommendations ?? [],
         bonusAnswer: bonusAnswer ?? '',
-      })
+      }) as unknown as React.ReactElement<DocumentProps>
     )
 
     const scoreText = score >= 85 ? 'ausgezeichnet' : score >= 70 ? 'gut' : score >= 50 ? 'verbesserungsfähig' : 'kritisch'
