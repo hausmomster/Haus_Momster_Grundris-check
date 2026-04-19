@@ -176,16 +176,20 @@ function ResultView({ result, token, onRestart }: { result: ScoreResult; token: 
             {t('Nächster Schritt', 'Next Step')}
           </p>
           <h3 className="font-serif text-2xl text-charcoal mb-3">
-            {t(
-              'Noch offene Fragen? Lass uns sprechen.',
-              "Still have questions? Let's talk."
-            )}
+            {result.bonusAnswer
+              ? t('Genau dafür ist mein Ask Me Anything.', 'That's exactly what my Ask Me Anything is for.')
+              : t('Lass uns das gemeinsam anschauen.', "Let's look at this together.")}
           </h3>
           <p className="font-sans text-sm text-warm-gray leading-relaxed mb-6 max-w-sm mx-auto">
-            {t(
-              'Im persönlichen 1:1-Gespräch gehe ich gezielt auf deinen Grundriss ein – konkrete Antworten, keine allgemeinen Tipps.',
-              'In a personal 1:1 session I look specifically at your floor plan – concrete answers, no generic advice.'
-            )}
+            {result.bonusAnswer
+              ? t(
+                  'Du hast deine Unsicherheit benannt – das ist der beste Ausgangspunkt. Im persönlichen 1:1 schauen wir uns genau das anhand deines Grundrisses an.',
+                  "You've named your concern – that's the best starting point. In a personal 1:1 we work through it directly on your floor plan."
+                )
+              : t(
+                  'Im persönlichen 1:1 gehe ich gezielt auf deinen Grundriss ein – konkrete Antworten, kein allgemeines Coaching.',
+                  'In a personal 1:1 I look specifically at your floor plan – concrete answers, no generic coaching.'
+                )}
           </p>
           <a
             href="https://hausmomster.setmore.com"
