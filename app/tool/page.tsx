@@ -3,8 +3,10 @@
 import { useEffect, useState, useRef, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { I18nProvider, useI18n } from '@/lib/i18n'
-import { questions, TOTAL_QUESTIONS } from '@/lib/questions'
+import { getQuestions } from '@/lib/questions'
 import { computeScore, type Answers, type ScoreResult } from '@/lib/scoring'
+
+type PropertyType = 'house' | 'apartment'
 
 // ─── Token gate ───────────────────────────────────────────────────────────────
 
@@ -85,6 +87,49 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
       <p className="text-right font-sans text-xs text-warm-gray mt-1">
         {current} / {total}
       </p>
+    </div>
+  )
+}
+
+// ─── Property type selector ───────────────────────────────────────────────────
+
+function PropertyTypeSelector({ onSelect }: { onSelect: (type: PropertyType) => void }) {
+  const { t } = useI18n()
+  return (
+    <div className="animate-slide-up">
+      <h2 className="font-serif text-3xl text-charcoal leading-snug mb-3">
+        {t('Worum geht es bei deinem Grundriss?', 'What type of property are you checking?')}
+      </h2>
+      <p className="font-sans text-sm text-warm-gray mb-8">
+        {t(
+          'Je nach Typ stellen wir dir die passenden Fragen.',
+          'We will tailor the questions to your property type.'
+        )}
+      </p>
+      <div className="space-y-3">
+        <button onClick={() => onSelect('house')} className="option-card text-left w-full">
+          <span className="font-serif text-xl text-charcoal block mb-1">
+            {t('Haus', 'House')}
+          </span>
+          <span className="font-sans text-sm text-warm-gray">
+            {t(
+              'Einfamilienhaus, Doppelhaus, Reihenhaus',
+              'Detached, semi-detached or terraced house'
+            )}
+          </span>
+        </button>
+        <button onClick={() => onSelect('apartment')} className="option-card text-left w-full">
+          <span className="font-serif text-xl text-charcoal block mb-1">
+            {t('Wohnung', 'Apartment')}
+          </span>
+          <span className="font-sans text-sm text-warm-gray">
+            {t(
+              'Eigentumswohnung, Neubau-Apartment',
+              'Owner-occupied or new-build apartment'
+            )}
+          </span>
+        </button>
+      </div>
     </div>
   )
 }
@@ -239,12 +284,15 @@ function Quiz() {
   const token = searchParams.get('token')
   const gateState = useTokenGate(token)
 
+  const [propertyType, setPropertyType] = useState<PropertyType | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Answers>({})
   const [textInput, setTextInput] = useState('')
   const [result, setResult] = useState<ScoreResult | null>(null)
   const [animKey, setAnimKey] = useState(0)
 
+  const questions = propertyType ? getQuestions(propertyType) : []
+  const totalQuestions = questions.length
   const currentQ = questions[currentIndex]
 
   function handleSelect(value: string) {
@@ -252,12 +300,12 @@ function Quiz() {
   }
 
   function handleNext() {
-    if (currentIndex === TOTAL_QUESTIONS - 1) {
+    if (currentIndex === totalQuestions - 1) {
       const finalAnswers = { ...answers }
       if (currentQ.type === 'text' && textInput.trim()) {
         finalAnswers[currentQ.id] = textInput.trim()
       }
-      const scored = computeScore(finalAnswers, lang)
+      const scored = computeScore(finalAnswers, lang, propertyType!)
       setResult(scored)
       if (token && token !== 'dev') {
         fetch('/api/complete-token', {
@@ -272,7 +320,7 @@ function Quiz() {
             token,
             score: scored.total,
             label: scored.label,
-            answers: finalAnswers,
+            answers: { ...finalAnswers, propertyType },
             recommendations: scored.recommendations,
             bonusAnswer: scored.bonusAnswer,
           }),
@@ -294,11 +342,11 @@ function Quiz() {
   }
 
   const canProceed =
-    currentQ.type === 'text'
+    currentQ?.type === 'text'
       ? true
-      : !!answers[currentQ.id]
+      : !!answers[currentQ?.id]
 
-  const isLastQuestion = currentIndex === TOTAL_QUESTIONS - 1
+  const isLastQuestion = currentIndex === totalQuestions - 1
 
   if (gateState === 'loading') {
     return (
@@ -403,10 +451,12 @@ function Quiz() {
       <main className="max-w-2xl mx-auto px-6 pb-20">
         {result ? (
           <ResultView result={result} token={token} onRestart={() => {}} />
+        ) : !propertyType ? (
+          <PropertyTypeSelector onSelect={(type) => { setPropertyType(type); setAnimKey((k) => k + 1) }} />
         ) : (
           <>
             <div className="mb-8">
-              <ProgressBar current={currentIndex + 1} total={TOTAL_QUESTIONS} />
+              <ProgressBar current={currentIndex + 1} total={totalQuestions} />
             </div>
 
             <div key={animKey} className="animate-slide-up">

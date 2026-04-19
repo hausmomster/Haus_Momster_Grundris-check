@@ -1,4 +1,5 @@
 export type Lang = 'de' | 'en'
+export type PropertyType = 'both' | 'house' | 'apartment'
 
 export type Option = {
   value: string
@@ -16,6 +17,7 @@ export type Question = {
   type: 'single' | 'text'
   scorable: boolean
   skippable?: boolean
+  forType?: PropertyType
   options?: Option[]
 }
 
@@ -33,11 +35,11 @@ export const questions: Question[] = [
     type: 'single',
     scorable: false,
     options: [
-      { value: 'search', label: { de: 'Grundstückssuche', en: 'Looking for a plot' }, points: 0 },
+      { value: 'search', label: { de: 'Grundstücks- oder Wohnungssuche', en: 'Looking for a property' }, points: 0 },
       { value: 'planning', label: { de: 'Grundriss in Planung', en: 'Floor plan in planning' }, points: 0 },
-      { value: 'permit', label: { de: 'Bauantrag läuft', en: 'Building permit in progress' }, points: 0 },
-      { value: 'construction', label: { de: 'Bau läuft bereits', en: 'Construction underway' }, points: 0 },
-      { value: 'done', label: { de: 'Haus steht schon', en: 'House already built' }, points: 0 },
+      { value: 'permit', label: { de: 'Bauantrag / Kaufvertrag läuft', en: 'Building permit / purchase contract in progress' }, points: 0 },
+      { value: 'construction', label: { de: 'Bau oder Umbau läuft', en: 'Construction or renovation underway' }, points: 0 },
+      { value: 'done', label: { de: 'Steht bereits', en: 'Already built' }, points: 0 },
     ],
   },
   {
@@ -52,10 +54,10 @@ export const questions: Question[] = [
     type: 'single',
     scorable: false,
     options: [
-      { value: 'small', label: { de: 'Unter 120 m²', en: 'Under 120 m²' }, points: 0 },
-      { value: 'medium', label: { de: '120–160 m²', en: '120–160 m²' }, points: 0 },
-      { value: 'large', label: { de: '160–200 m²', en: '160–200 m²' }, points: 0 },
-      { value: 'xlarge', label: { de: 'Über 200 m²', en: 'Over 200 m²' }, points: 0 },
+      { value: 'small', label: { de: 'Unter 80 m²', en: 'Under 80 m²' }, points: 0 },
+      { value: 'medium', label: { de: '80–120 m²', en: '80–120 m²' }, points: 0 },
+      { value: 'large', label: { de: '120–160 m²', en: '120–160 m²' }, points: 0 },
+      { value: 'xlarge', label: { de: 'Über 160 m²', en: 'Over 160 m²' }, points: 0 },
     ],
   },
   {
@@ -193,6 +195,7 @@ export const questions: Question[] = [
     block: 3,
     blockTitle: { de: 'Durchgänge', en: 'Corridors & Passages' },
     blockEmoji: '📏',
+    forType: 'house',
     question: {
       de: 'Wie breit sind die Nebendurchgänge (z.B. Nebenflur, Abstellraum)?',
       en: 'How wide are the secondary passages (e.g. secondary hallway, storage room)?',
@@ -200,20 +203,35 @@ export const questions: Question[] = [
     type: 'single',
     scorable: false,
     options: [
-      { value: 'under80', label: { de: 'Unter 80 cm', en: 'Under 80 cm' }, points: 0, recommendation: {
-        de: 'Nebendurchgänge unter 80 cm werden im Alltag zur Engstelle – besonders beim Tragen von Gegenständen oder mit Kindern.',
-        en: 'Secondary passages under 80 cm become bottlenecks in everyday use – especially when carrying items or with children.',
-      }},
-      { value: '80-90', label: { de: '80–90 cm', en: '80–90 cm' }, points: 0, recommendation: {
-        de: 'Ausreichend für Nebenwege – aber prüfe ob du auf 90 cm erweitern kannst, das macht einen spürbaren Unterschied im Alltag.',
-        en: 'Sufficient for secondary routes – but check if you can expand to 90 cm, which makes a noticeable difference in everyday use.',
-      }},
+      {
+        value: 'under80',
+        label: { de: 'Unter 80 cm', en: 'Under 80 cm' },
+        points: 0,
+        recommendation: {
+          de: 'Nebendurchgänge unter 80 cm werden im Alltag zur Engstelle – besonders beim Tragen von Gegenständen oder mit Kindern.',
+          en: 'Secondary passages under 80 cm become bottlenecks in everyday use – especially when carrying items or with children.',
+        },
+      },
+      {
+        value: '80-90',
+        label: { de: '80–90 cm', en: '80–90 cm' },
+        points: 0,
+        recommendation: {
+          de: 'Ausreichend für Nebenwege – aber prüfe ob du auf 90 cm erweitern kannst, das macht einen spürbaren Unterschied im Alltag.',
+          en: 'Sufficient for secondary routes – but check if you can expand to 90 cm, which makes a noticeable difference in everyday use.',
+        },
+      },
       { value: 'over90', label: { de: 'Über 90 cm', en: 'Over 90 cm' }, points: 0 },
       { value: 'none', label: { de: 'Keine Nebendurchgänge', en: 'No secondary passages' }, points: 0 },
-      { value: 'unknown', label: { de: 'Weiß ich nicht', en: "I don't know" }, points: 0, recommendation: {
-        de: 'Miss alle Durchgänge im Grundriss nach – auch Nebenwege sollten mindestens 80 cm breit sein.',
-        en: 'Measure all passages in the floor plan – secondary routes should also be at least 80 cm wide.',
-      }},
+      {
+        value: 'unknown',
+        label: { de: 'Weiß ich nicht', en: "I don't know" },
+        points: 0,
+        recommendation: {
+          de: 'Miss alle Durchgänge im Grundriss nach – auch Nebenwege sollten mindestens 80 cm breit sein.',
+          en: 'Measure all passages in the floor plan – secondary routes should also be at least 80 cm wide.',
+        },
+      },
     ],
   },
   {
@@ -304,7 +322,7 @@ export const questions: Question[] = [
         points: 0,
         recommendation: {
           de: 'Kritisch: Ein Abstand von unter 100 cm zwischen Küche und Insel ist einer der häufigsten und folgenschwersten Planungsfehler. Zwei Personen können nicht gleichzeitig in der Küche arbeiten, ohne sich ständig im Weg zu stehen. Sofort umplanen – Ziel sind mindestens 120 cm.',
-          en: 'Critical: A clearance of under 100 cm between the kitchen counter and island is one of the most common and consequential planning errors. Two people cannot work in the kitchen at the same time without constantly being in each other\'s way. Replan immediately – aim for at least 120 cm.',
+          en: "Critical: A clearance of under 100 cm between the kitchen counter and island is one of the most common and consequential planning errors. Two people cannot work in the kitchen at the same time without constantly being in each other's way. Replan immediately – aim for at least 120 cm.",
         },
       },
       {
@@ -312,8 +330,8 @@ export const questions: Question[] = [
         label: { de: '100–115 cm', en: '100–115 cm' },
         points: 6,
         recommendation: {
-          de: 'Ausreichend, aber nicht komfortabel. Bei 100–115 cm kann man nicht aneinander vorbeigehen, ohne sich zu berühren. Wenn möglich, auf 120 cm erweitern.',
-          en: 'Sufficient but not comfortable. At 100–115 cm, you can\'t pass each other without touching. Expand to 120 cm if possible.',
+          de: "Ausreichend, aber nicht komfortabel. Bei 100–115 cm kann man nicht aneinander vorbeigehen, ohne sich zu berühren. Wenn möglich, auf 120 cm erweitern.",
+          en: "Sufficient but not comfortable. At 100–115 cm, you can't pass each other without touching. Expand to 120 cm if possible.",
         },
       },
       { value: 'ab120', label: { de: 'Über 120 cm', en: 'Over 120 cm' }, points: 8 },
@@ -381,8 +399,8 @@ export const questions: Question[] = [
         label: { de: 'Noch geplant', en: 'Still being planned' },
         points: 4,
         recommendation: {
-          de: 'Priorisiere den Hauswirtschaftsraum – 4–6 m² reichen. Er ist der am häufigsten bereute fehlende Raum bei Bauherrinnen.',
-          en: 'Prioritise the utility room – 4–6 m² is enough. It\'s the most commonly regretted missing room among homebuilders.',
+          de: "Priorisiere den Hauswirtschaftsraum – 4–6 m² reichen. Er ist der am häufigsten bereute fehlende Raum bei Bauherrinnen.",
+          en: "Prioritise the utility room – 4–6 m² is enough. It's the most commonly regretted missing room among homebuilders.",
         },
       },
       {
@@ -530,7 +548,7 @@ export const questions: Question[] = [
     blockEmoji: '👶',
     question: {
       de: 'Wie groß sind die Kinder- oder Arbeitszimmer?',
-      en: 'How large are the children\'s or office rooms?',
+      en: "How large are the children's or office rooms?",
     },
     type: 'single',
     scorable: true,
@@ -541,8 +559,8 @@ export const questions: Question[] = [
         label: { de: 'Unter 10 m²', en: 'Under 10 m²' },
         points: 0,
         recommendation: {
-          de: 'Unter 10 m² ist ein Kinder- oder Arbeitszimmer kaum nutzbar – Bett, Schrank und Schreibtisch bzw. Schreibtisch und Regal passen kaum rein. Prüfe ob Wände verschoben werden können.',
-          en: 'Under 10 m², a children\'s or office room is barely usable – bed, wardrobe and desk or desk and shelving barely fit. Check if walls can be shifted.',
+          de: "Unter 10 m² ist ein Kinder- oder Arbeitszimmer kaum nutzbar – Bett, Schrank und Schreibtisch passen kaum rein. Prüfe ob Wände verschoben werden können.",
+          en: "Under 10 m², a children's or office room is barely usable – bed, wardrobe and desk barely fit. Check if walls can be shifted.",
         },
       },
       {
@@ -563,6 +581,7 @@ export const questions: Question[] = [
     block: 7,
     blockTitle: { de: 'Kinderfreundlichkeit', en: 'Child-Friendliness' },
     blockEmoji: '👶',
+    forType: 'house',
     question: {
       de: 'Gibt es kurze Wege zwischen Eltern- und Kinderzimmern?',
       en: "Are there short routes between parents' and children's rooms?",
@@ -577,8 +596,8 @@ export const questions: Question[] = [
         label: { de: 'Teilweise', en: 'Partly' },
         points: 3,
         recommendation: {
-          de: 'Kurze Wege sind vor allem in den ersten Jahren entscheidend – nachts zu einem Kleinkind über Treppen zu müssen, wird schnell zur Belastung. Plane Eltern- und Kinderzimmer auf derselben Ebene, aber nicht Wand an Wand: Ein kleiner Flur oder ein Bad dazwischen gibt später – wenn Kinder Teenager werden – natürliche Distanz und akustische Privatsphäre für beide Seiten. Du planst heute für die nächsten 20 Jahre.',
-          en: "Short distances matter most in the early years — having to climb stairs to a toddler at night quickly becomes exhausting. Plan parents' and children's rooms on the same floor, but not wall to wall: a small hallway or bathroom in between gives natural distance and acoustic privacy later, when children become teenagers and both sides need their own space. You are planning today for the next 20 years.",
+          de: 'Kurze Wege sind vor allem in den ersten Jahren entscheidend – nachts zu einem Kleinkind über Treppen zu müssen, wird schnell zur Belastung. Plane Eltern- und Kinderzimmer auf derselben Ebene, aber nicht Wand an Wand: Ein kleiner Flur oder ein Bad dazwischen gibt später natürliche Distanz und akustische Privatsphäre für beide Seiten.',
+          en: "Short distances matter most in the early years — having to climb stairs to a toddler at night quickly becomes exhausting. Plan parents' and children's rooms on the same floor, but not wall to wall: a small hallway or bathroom in between gives natural distance and acoustic privacy later.",
         },
       },
       {
@@ -586,18 +605,162 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Verschiedene Ebenen für Eltern- und Kinderzimmer bedeuten in den ersten Lebensjahren nächtliche Treppengänge – das summiert sich über Monate und Jahre erheblich. Gleichzeitig gilt: völlige Nähe ist langfristig auch nicht ideal. Teenagers brauchen Abstand und Privatsphäre – und Eltern auch. Das optimale Layout liegt auf derselben Ebene, mit einem natürlichen Puffer wie Flur, Bad oder Abstellraum dazwischen. Wenn eine Ebenenänderung nicht vermeidbar ist, lohnt sich zumindest ein Babyfon-System oder eine temporäre Lösung für die ersten Jahre einzuplanen.',
-          en: "Separate floors for parents and children mean nightly stair trips in the early years — that adds up significantly over months and years. At the same time, being too close is not ideal long-term either. Teenagers need distance and privacy — and so do parents. The optimal layout is on the same floor with a natural buffer like a hallway, bathroom, or storage room in between. If a floor change is unavoidable, at least plan for a monitor system or a temporary solution for the first years.",
+          de: 'Verschiedene Ebenen für Eltern- und Kinderzimmer bedeuten in den ersten Lebensjahren nächtliche Treppengänge. Gleichzeitig gilt: völlige Nähe ist langfristig nicht ideal. Das optimale Layout liegt auf derselben Ebene, mit einem natürlichen Puffer wie Flur, Bad oder Abstellraum dazwischen.',
+          en: "Separate floors for parents and children mean nightly stair trips in the early years. At the same time, being too close is not ideal long-term. The optimal layout is on the same floor with a natural buffer like a hallway, bathroom, or storage room in between.",
         },
       },
       { value: 'skip', label: { de: 'Nicht zutreffend', en: 'Not applicable' }, points: 0 },
     ],
   },
 
-  // ─── BLOCK 8 – BADEZIMMER (10 pts) ───────────────────────────────────────
+  // ─── BLOCK 8 – AUßENBEREICH: HAUS ────────────────────────────────────────
+  {
+    id: 22,
+    block: 8,
+    blockTitle: { de: 'Außenbereich', en: 'Outdoor Area' },
+    blockEmoji: '🌿',
+    forType: 'house',
+    question: {
+      de: 'Ist der Garten oder die Terrasse direkt vom Wohnbereich zugänglich?',
+      en: 'Is the garden or terrace directly accessible from the living area?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja, direkt vom Wohn- oder Essbereich', en: 'Yes, directly from the living or dining area' }, points: 5 },
+      {
+        value: 'indirect',
+        label: { de: 'Nur über Umwege oder andere Räume', en: 'Only via detour or other rooms' },
+        points: 2,
+        recommendation: {
+          de: 'Ein direkter Zugang vom Wohn- oder Essbereich zur Terrasse oder zum Garten ist einer der Faktoren, der die Lebensqualität im Alltag spürbar erhöht – besonders im Sommer. Prüfe ob eine Terrassentür nachgerüstet werden kann.',
+          en: 'Direct access from the living or dining area to the terrace or garden is one of the factors that noticeably improves quality of life in everyday use – especially in summer. Check if a terrace door can be added.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Kein Außenbereich geplant', en: 'No outdoor area planned' },
+        points: 0,
+        recommendation: {
+          de: 'Selbst eine kleine Terrasse oder ein Balkon erhöht die Aufenthaltsqualität erheblich. Falls der Grundriss keinen direkten Außenbereich vorsieht, prüfe ob eine Loggia oder ein Wintergarten möglich wäre.',
+          en: 'Even a small terrace or balcony significantly improves quality of life. If the floor plan does not include a direct outdoor area, check if a loggia or conservatory might be possible.',
+        },
+      },
+    ],
+  },
+  {
+    id: 23,
+    block: 8,
+    blockTitle: { de: 'Außenbereich', en: 'Outdoor Area' },
+    blockEmoji: '🌿',
+    forType: 'house',
+    question: {
+      de: 'Gibt es einen separaten Technik- oder Heizungsraum?',
+      en: 'Is there a dedicated utility or heating room?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja, eigener Raum geplant', en: 'Yes, dedicated room planned' }, points: 5 },
+      {
+        value: 'integrated',
+        label: { de: 'Im Keller oder HWR integriert', en: 'Integrated in basement or utility room' },
+        points: 3,
+        recommendation: {
+          de: 'Eine Integration in Keller oder Hauswirtschaftsraum funktioniert, aber ein separater Technikraum reduziert Lärm und gibt mehr Flexibilität bei Wartungsarbeiten.',
+          en: 'Integration in the basement or utility room works, but a separate technical room reduces noise and gives more flexibility for maintenance work.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein, nicht geplant', en: 'No, not planned' },
+        points: 0,
+        recommendation: {
+          de: 'Heizung, Warmwasserbereiter und Lüftungsanlage brauchen Platz und Zugänglichkeit. Ohne dedizierten Technikraum landen diese Aggregate im Wohnbereich oder Keller ohne klare Struktur – das erschwert spätere Wartung erheblich.',
+          en: 'Heating, hot water and ventilation systems need space and accessibility. Without a dedicated technical room, these units end up in living areas or the basement without clear structure – making later maintenance significantly harder.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 8 – AUßENBEREICH: WOHNUNG ─────────────────────────────────────
+  {
+    id: 24,
+    block: 8,
+    blockTitle: { de: 'Außen & Komfort', en: 'Outdoor & Comfort' },
+    blockEmoji: '🌿',
+    forType: 'apartment',
+    question: {
+      de: 'Gibt es einen Balkon oder eine Loggia?',
+      en: 'Is there a balcony or loggia?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      {
+        value: 'yes_good',
+        label: { de: 'Ja, Süd- oder Westausrichtung, direkt vom Wohnbereich', en: 'Yes, south or west facing, directly from the living area' },
+        points: 5,
+      },
+      {
+        value: 'yes_limited',
+        label: { de: 'Ja, aber ungünstige Ausrichtung oder nur über Schlafzimmer', en: 'Yes, but unfavourable orientation or only via bedroom' },
+        points: 2,
+        recommendation: {
+          de: 'Ein Balkon mit Nord- oder Ostausrichtung wird deutlich weniger genutzt als einer mit Süd- oder Westlage. Falls der Balkon nur über das Schlafzimmer zugänglich ist, entsteht ein Nutzungskonflikt im Alltag.',
+          en: 'A balcony facing north or east is used significantly less than one facing south or west. If the balcony is only accessible via the bedroom, a daily usage conflict arises.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein', en: 'No' },
+        points: 0,
+        recommendation: {
+          de: 'Eine Wohnung ohne Außenfläche verliert besonders in den Sommermonaten spürbar an Wohnqualität. Falls nachträglich möglich, prüfe einen vorgehängten Balkon oder eine Loggia als Erweiterung.',
+          en: 'An apartment without any outdoor area loses noticeably in quality of life during summer months. If possible later, check for an added balcony or loggia as an extension.',
+        },
+      },
+    ],
+  },
+  {
+    id: 25,
+    block: 8,
+    blockTitle: { de: 'Außen & Komfort', en: 'Outdoor & Comfort' },
+    blockEmoji: '🌿',
+    forType: 'apartment',
+    question: {
+      de: 'Sind die Schlafzimmer von der Straßenseite oder lauten Bereichen akustisch geschützt?',
+      en: 'Are the bedrooms acoustically protected from the street or noisy areas?',
+    },
+    type: 'single',
+    scorable: true,
+    options: [
+      { value: 'yes', label: { de: 'Ja, Schlafzimmer zeigen zur ruhigen Seite', en: 'Yes, bedrooms face the quiet side' }, points: 5 },
+      {
+        value: 'partial',
+        label: { de: 'Teilweise', en: 'Partly' },
+        points: 2,
+        recommendation: {
+          de: 'Schlafzimmer zur Straßenseite sind einer der häufigsten Komfitzenquellen in Stadtwohnungen. Prüfe ob Schlaf- und Kinderzimmer auf die ruhigere Hofseite verlegt werden können.',
+          en: 'Bedrooms facing the street are one of the most common comfort issues in city apartments. Check if bedrooms and children\'s rooms can be moved to the quieter courtyard side.',
+        },
+      },
+      {
+        value: 'no',
+        label: { de: 'Nein / Unsicher', en: 'No / Unsure' },
+        points: 0,
+        recommendation: {
+          de: 'Schlafzimmer zur Straße bedeuten dauerhaft Lärm in der Nacht. Das lässt sich nach dem Bau kaum noch korrigieren. Versuche Schlafräume zur ruhigen Seite zu legen und Wohn- und Küchenbereiche zur Straße zu orientieren.',
+          en: 'Bedrooms facing the street mean permanent noise at night. This is hard to correct after construction. Try to place sleeping areas on the quiet side and orient living and kitchen areas towards the street.',
+        },
+      },
+    ],
+  },
+
+  // ─── BLOCK 9 – BADEZIMMER (10 pts) ───────────────────────────────────────
   {
     id: 19,
-    block: 8,
+    block: 9,
     blockTitle: { de: 'Badezimmer', en: 'Bathroom' },
     blockEmoji: '🛁',
     question: {
@@ -621,7 +784,7 @@ export const questions: Question[] = [
   },
   {
     id: 20,
-    block: 8,
+    block: 9,
     blockTitle: { de: 'Badezimmer', en: 'Bathroom' },
     blockEmoji: '🛁',
     question: {
@@ -653,10 +816,10 @@ export const questions: Question[] = [
     ],
   },
 
-  // ─── BLOCK 9 – BONUSFRAGE (no score, lead capture) ───────────────────────
+  // ─── BLOCK 10 – BONUSFRAGE (no score, lead capture) ──────────────────────
   {
     id: 21,
-    block: 9,
+    block: 10,
     blockTitle: { de: 'Bonusfrage', en: 'Bonus Question' },
     blockEmoji: '💬',
     question: {
@@ -668,5 +831,10 @@ export const questions: Question[] = [
   },
 ]
 
-export const TOTAL_QUESTIONS = questions.length
+export function getQuestions(propertyType: 'house' | 'apartment'): Question[] {
+  return questions.filter(
+    (q) => !q.forType || q.forType === 'both' || q.forType === propertyType
+  )
+}
+
 export const MAX_SCORE = 100

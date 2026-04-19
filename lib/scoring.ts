@@ -1,4 +1,4 @@
-import { questions, type Lang } from './questions'
+import { getQuestions, type Lang } from './questions'
 
 export type Answers = Record<number, string>
 
@@ -84,28 +84,35 @@ const LABELS: Array<{
   },
 ]
 
-export function computeScore(answers: Answers, lang: Lang): ScoreResult {
-  let total = 0
+export function computeScore(
+  answers: Answers,
+  lang: Lang,
+  propertyType: 'house' | 'apartment'
+): ScoreResult {
+  const filteredQuestions = getQuestions(propertyType)
+  let rawTotal = 0
+  let rawMax = 0
   const recommendations: Recommendation[] = []
 
-  for (const q of questions) {
-    if (!q.scorable || q.type === 'text') continue
-
-    const selected = answers[q.id]
-    if (!selected || !q.options) continue
+  for (const q of filteredQuestions) {
+    if (!q.scorable || q.type === 'text' || !q.options) continue
 
     const maxPoints = Math.max(...q.options.map((o) => o.points))
+    rawMax += maxPoints
+
+    const selected = answers[q.id]
+    if (!selected) continue
 
     // Skipped questions get full points — no penalty for non-applicable situations
     if (selected === 'skip') {
-      total += maxPoints
+      rawTotal += maxPoints
       continue
     }
 
     const chosen = q.options.find((o) => o.value === selected)
     if (!chosen) continue
 
-    total += chosen.points
+    rawTotal += chosen.points
 
     if (chosen.points < maxPoints && chosen.recommendation) {
       recommendations.push({
@@ -119,15 +126,14 @@ export function computeScore(answers: Answers, lang: Lang): ScoreResult {
     }
   }
 
+  const percentage = rawMax > 0 ? Math.round((rawTotal / rawMax) * 100) : 0
   const bonusAnswer = answers[21] ?? ''
-
-  const tier =
-    LABELS.find((l) => total >= l.min) ?? LABELS[LABELS.length - 1]
+  const tier = LABELS.find((l) => percentage >= l.min) ?? LABELS[LABELS.length - 1]
 
   return {
-    total,
+    total: percentage,
     max: 100,
-    percentage: total,
+    percentage,
     label: tier.label[lang],
     labelColor: tier.labelColor,
     headline: tier.headline[lang],
