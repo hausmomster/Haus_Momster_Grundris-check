@@ -41,3 +41,48 @@
     @apply border-taupe bg-taupe text-cream;
   }
 }
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #2C2C2C;
+    font-size: 11pt;
+  }
+
+  /* Hide everything except the result */
+  header,
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Show only the print result container */
+  .print-only {
+    display: block !important;
+  }
+
+  /* Clean page layout */
+  .print-result {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Score circle — use border trick since colors render in print */
+  @page {
+    margin: 20mm 15mm;
+  }
+
+  /* Avoid page breaks inside recommendation cards */
+  .rec-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Force background colors to print */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

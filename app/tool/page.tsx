@@ -95,7 +95,7 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
   const { t } = useI18n()
 
   return (
-    <div className="animate-slide-up space-y-10">
+    <div className="animate-slide-up space-y-10 print-result">
       {/* Score circle */}
       <div className="text-center">
         <div
@@ -125,7 +125,7 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
           </h3>
           <div className="space-y-4">
             {result.recommendations.map((rec) => (
-              <div key={rec.questionId} className="border border-warm-gray-light bg-white p-5">
+              <div key={rec.questionId} className="rec-card border border-warm-gray-light bg-white p-5">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="font-sans text-xs tracking-widest uppercase text-warm-gray">
                     {rec.blockTitle}
@@ -163,7 +163,7 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
         </div>
       )}
 
-      <div className="pt-4 border-t border-warm-gray-light text-center">
+      <div className="pt-4 border-t border-warm-gray-light text-center no-print">
         <p className="font-sans text-sm text-warm-gray">
           {t(
             'Folge @haus_momster auf Instagram für mehr Grundriss-Tipps.',
@@ -178,6 +178,15 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
         >
           @haus_momster →
         </a>
+      </div>
+
+      <div className="pt-2 text-center no-print">
+        <button
+          onClick={() => window.print()}
+          className="btn-secondary"
+        >
+          {t('Ergebnis als PDF speichern', 'Save result as PDF')}
+        </button>
       </div>
     </div>
   )
@@ -315,7 +324,7 @@ function Quiz() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-5 max-w-2xl mx-auto">
+      <header className="no-print flex items-center justify-between px-6 py-5 max-w-2xl mx-auto">
         <p className="font-serif text-lg text-charcoal">Grundriss-Check</p>
         <div className="flex gap-1 text-sm font-sans">
           <button
