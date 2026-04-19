@@ -73,13 +73,12 @@ export async function POST(req: NextRequest) {
           </a>
         </div>
 
-        <p style="font-size: 13px; color: #8C8880;">
+        <p>
           Wichtig: Dieser Link funktioniert nur einmal und verfällt nach 5 Minuten Inaktivität.
           Starte ihn erst, wenn du 10–15 Minuten ungestörte Zeit hast.
         </p>
 
-        <hr style="border: none; border-top: 1px solid #E8E4DF; margin: 32px 0;" />
-        <p style="font-size: 12px; color: #8C8880;">
+        <p>
           Lejla · <a href="https://www.instagram.com/haus_momster" style="color: #B8956A;">@haus_momster</a>
         </p>
       </div>
