@@ -15,10 +15,12 @@ function hex(h: string) {
 // ── Sanitise text for WinAnsi encoding ───────────────────────────────────────
 function san(t: string): string {
   return t
+    .replace(/\r?\n/g, ' ').replace(/\t/g, ' ')
     .replace(/→/g, '>').replace(/←/g, '<').replace(/↑/g, '^').replace(/↓/g, 'v')
     .replace(/–/g, '-').replace(/—/g, '-')
     .replace(/\u2018|\u2019/g, "'").replace(/\u201C|\u201D/g, '"')
     .replace(/\u2026/g, '...').replace(/\u00B7/g, '|')
+    .replace(/[\x00-\x09\x0B-\x1F\x7F]/g, '')
     .replace(/[^\x00-\xFF]/g, '')
 }
 
