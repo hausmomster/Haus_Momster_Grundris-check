@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
 
         <hr style="border: none; border-top: 1px solid #E8E4DF; margin: 32px 0;" />
         <p style="font-size: 12px; color: #8C8880;">
-          Haus Momster · <a href="https://www.instagram.com/haus_momster" style="color: #B8956A;">@haus_momster</a>
+          Lejla · <a href="https://www.instagram.com/haus_momster" style="color: #B8956A;">@haus_momster</a>
         </p>
       </div>
     `,
