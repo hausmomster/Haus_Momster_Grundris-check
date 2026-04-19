@@ -267,11 +267,11 @@ export const questions: Question[] = [
       { value: 'u-shape', label: { de: 'U-Form', en: 'U-shape' }, points: 6 },
       {
         value: 'galley',
-        label: { de: 'Zweizeiler', en: 'Galley kitchen' },
+        label: { de: 'Einzeiler', en: 'Single-line kitchen' },
         points: 4,
         recommendation: {
-          de: 'Ein Zweizeiler ist funktional, aber begrenzt. Achte besonders auf einen Mindestabstand von 110 cm zwischen den Zeilen für komfortables Arbeiten.',
-          en: 'A galley kitchen is functional but limited. Pay particular attention to a minimum clearance of 110 cm between the two rows for comfortable working.',
+          de: 'Ein Einzeiler ist funktional, aber bietet wenig Arbeitsfläche und Stauraum. Prüfe ob du durch eine L-Erweiterung oder eine Insel mehr Kapazität gewinnen kannst.',
+          en: 'A single-line kitchen is functional but offers limited worktop space and storage. Check whether an L-extension or island could give you more capacity.',
         },
       },
       {
