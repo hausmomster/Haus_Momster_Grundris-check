@@ -130,7 +130,7 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
           </h3>
           <div className="space-y-4">
             {result.recommendations.map((rec) => (
-              <div key={rec.questionId} className="rec-card border border-warm-gray-light bg-white p-5">
+              <div key={rec.questionId} className="rec-card border border-warm-gray-light bg-white p-5 rounded-xl">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="font-sans text-xs tracking-widest uppercase text-warm-gray">
                     {rec.blockTitle}

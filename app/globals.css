@@ -31,14 +31,14 @@
   }
 
   .option-card {
-    @apply w-full text-left px-5 py-4 border border-warm-gray-light bg-white
-           font-sans text-charcoal transition-all duration-150
-           hover:border-taupe hover:bg-cream cursor-pointer
+    @apply w-full text-left px-5 py-4 rounded-xl border border-warm-gray-light bg-white
+           font-sans text-charcoal transition-all duration-200
+           hover:border-taupe hover:shadow-sm cursor-pointer
            focus:outline-none focus:ring-2 focus:ring-taupe;
   }
 
   .option-card-selected {
-    @apply border-taupe bg-taupe text-cream;
+    @apply border-taupe bg-taupe text-cream shadow-sm;
   }
 }
 
