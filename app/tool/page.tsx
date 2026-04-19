@@ -96,6 +96,11 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
 
   return (
     <div className="animate-slide-up space-y-10 print-result">
+      {/* Logo shown only in PDF */}
+      <div className="hidden print:flex justify-center pb-4 border-b border-warm-gray-light">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="Haus Momster" className="h-16 w-auto" style={{ mixBlendMode: 'multiply' }} />
+      </div>
       {/* Score circle */}
       <div className="text-center">
         <div
@@ -325,7 +330,8 @@ function Quiz() {
     <div className="min-h-screen bg-cream">
       {/* Header */}
       <header className="no-print flex items-center justify-between px-6 py-5 max-w-2xl mx-auto">
-        <p className="font-serif text-lg text-charcoal">Grundriss-Check</p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="Haus Momster" className="h-10 w-auto" style={{ mixBlendMode: 'multiply' }} />
         <div className="flex gap-1 text-sm font-sans">
           <button
             onClick={() => setLang('de')}

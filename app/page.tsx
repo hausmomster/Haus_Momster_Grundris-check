@@ -62,6 +62,15 @@ function LandingContent() {
 
       {/* Hero */}
       <main className="max-w-2xl mx-auto px-6 pt-16 pb-24 text-center animate-fade-in">
+        <div className="flex justify-center mb-6">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="Haus Momster"
+            className="h-24 w-auto"
+            style={{ mixBlendMode: 'multiply' }}
+          />
+        </div>
         <p className="font-sans text-sm tracking-widest text-taupe uppercase mb-6">
           {t('Grundriss-Check Score', 'Floor Plan Check Score')}
         </p>
@@ -84,7 +93,7 @@ function LandingContent() {
           href={SHOPIFY_URL}
           className="btn-primary text-lg px-10 py-5 mb-4 inline-block"
         >
-          {t('Jetzt kaufen – €19', 'Buy now – €19')}
+          {t('Jetzt kaufen – €29', 'Buy now – €29')}
         </a>
 
         <p className="font-sans text-sm text-warm-gray mt-4">
@@ -162,7 +171,7 @@ function LandingContent() {
           )}
         </p>
         <a href={SHOPIFY_URL} className="inline-block bg-cream text-taupe px-10 py-5 font-sans font-medium text-base tracking-wide hover:bg-taupe-light hover:text-cream transition-colors">
-          {t('Jetzt kaufen – €19', 'Buy now – €19')}
+          {t('Jetzt kaufen – €29', 'Buy now – €29')}
         </a>
       </section>
 
