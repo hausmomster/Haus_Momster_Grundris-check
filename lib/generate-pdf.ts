@@ -13,7 +13,7 @@ function hex(h: string) {
 }
 
 // ── Sanitise text for WinAnsi encoding ───────────────────────────────────────
-function san(t: string): string {
+export function san(t: string): string {
   return t
     .replace(/\r?\n/g, ' ').replace(/\t/g, ' ')
     .replace(/→/g, '>').replace(/←/g, '<').replace(/↑/g, '^').replace(/↓/g, 'v')
