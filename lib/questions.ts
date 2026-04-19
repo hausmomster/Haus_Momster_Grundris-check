@@ -710,44 +710,6 @@ export const questions: Question[] = [
 
   // ─── BLOCK 8 – AUßENBEREICH: WOHNUNG ─────────────────────────────────────
   {
-    id: 24,
-    block: 8,
-    blockTitle: { de: 'Außen & Komfort', en: 'Outdoor & Comfort' },
-    blockEmoji: '🌿',
-    forType: 'apartment',
-    question: {
-      de: 'Gibt es einen Balkon oder eine Loggia?',
-      en: 'Is there a balcony or loggia?',
-    },
-    type: 'single',
-    scorable: true,
-    options: [
-      {
-        value: 'yes_good',
-        label: { de: 'Ja, Süd- oder Westausrichtung, direkt vom Wohnbereich', en: 'Yes, south or west facing, directly from the living area' },
-        points: 5,
-      },
-      {
-        value: 'yes_limited',
-        label: { de: 'Ja, aber ungünstige Ausrichtung oder nur über Schlafzimmer', en: 'Yes, but unfavourable orientation or only via bedroom' },
-        points: 2,
-        recommendation: {
-          de: 'Ein Balkon mit Nord- oder Ostausrichtung wird deutlich weniger genutzt als einer mit Süd- oder Westlage. Falls der Balkon nur über das Schlafzimmer zugänglich ist, entsteht ein Nutzungskonflikt im Alltag.',
-          en: 'A balcony facing north or east is used significantly less than one facing south or west. If the balcony is only accessible via the bedroom, a daily usage conflict arises.',
-        },
-      },
-      {
-        value: 'no',
-        label: { de: 'Nein', en: 'No' },
-        points: 0,
-        recommendation: {
-          de: 'Eine Wohnung ohne Außenfläche verliert besonders in den Sommermonaten spürbar an Wohnqualität. Falls nachträglich möglich, prüfe einen vorgehängten Balkon oder eine Loggia als Erweiterung.',
-          en: 'An apartment without any outdoor area loses noticeably in quality of life during summer months. If possible later, check for an added balcony or loggia as an extension.',
-        },
-      },
-    ],
-  },
-  {
     id: 25,
     block: 8,
     blockTitle: { de: 'Außen & Komfort', en: 'Outdoor & Comfort' },
