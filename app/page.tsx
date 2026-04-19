@@ -51,7 +51,7 @@ function LandingContent() {
             <img
               src="/hero.jpg"
               alt="Lejla Krstic – Haus Momster"
-              className="w-full h-72 md:h-[420px] object-cover object-top rounded-2xl"
+              className="w-full aspect-[3/4] md:aspect-auto md:h-[420px] object-cover object-center rounded-2xl"
             />
           </div>
 
