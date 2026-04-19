@@ -168,6 +168,33 @@ function ResultView({ result, onRestart }: { result: ScoreResult; onRestart: () 
         </div>
       )}
 
+      {/* Consulting CTA — visible on web and in PDF */}
+      <div className="rounded-xl border border-taupe bg-white p-8 text-center">
+        <p className="font-sans text-xs tracking-widest uppercase text-taupe mb-4">
+          {t('Nächster Schritt', 'Next Step')}
+        </p>
+        <h3 className="font-serif text-2xl text-charcoal mb-3">
+          {t(
+            'Noch offene Fragen? Lass uns sprechen.',
+            'Still have questions? Let\'s talk.'
+          )}
+        </h3>
+        <p className="font-sans text-sm text-warm-gray leading-relaxed mb-6 max-w-sm mx-auto">
+          {t(
+            'Im persönlichen 1:1-Gespräch gehe ich gezielt auf deinen Grundriss ein – konkrete Antworten, keine allgemeinen Tipps.',
+            'In a personal 1:1 session I look specifically at your floor plan – concrete answers, no generic advice.'
+          )}
+        </p>
+        <a
+          href="https://hausmomster.setmore.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary inline-block"
+        >
+          {t('Beratungsgespräch buchen', 'Book a consultation')}
+        </a>
+      </div>
+
       <div className="pt-4 border-t border-warm-gray-light text-center no-print">
         <p className="font-sans text-sm text-warm-gray">
           {t(
