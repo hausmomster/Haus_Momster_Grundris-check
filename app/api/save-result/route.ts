@@ -107,7 +107,8 @@ export async function POST(req: NextRequest) {
       ],
     })
   } catch (err) {
-    console.error('PDF/email error:', err)
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('PDF/email error for', email, ':', msg)
   }
 
   return NextResponse.json({ ok: true })
