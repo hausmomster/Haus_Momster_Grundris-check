@@ -42,7 +42,19 @@ function LandingContent() {
       </header>
 
       {/* Hero */}
-      <main className="max-w-5xl mx-auto px-6 pt-10 pb-24 animate-fade-in">
+      <main className="max-w-5xl mx-auto px-6 pt-6 pb-24 animate-fade-in">
+
+        {/* Logo — centered above everything */}
+        <div className="flex justify-center mb-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="Haus Momster"
+            className="h-20 w-auto"
+            style={{ mixBlendMode: 'multiply' }}
+          />
+        </div>
+
         <div className="flex flex-col md:flex-row md:items-center gap-12 md:gap-16">
 
           {/* Photo — compact portrait */}
@@ -57,16 +69,6 @@ function LandingContent() {
 
           {/* Text content */}
           <div className="flex-1">
-            <div className="mb-6">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo.png"
-                alt="Haus Momster"
-                className="h-16 w-auto mb-6"
-                style={{ mixBlendMode: 'multiply' }}
-              />
-            </div>
-
             <p className="font-sans text-xs tracking-widest text-taupe uppercase mb-5">
               {t('Grundriss-Check Score', 'Floor Plan Check Score')}
             </p>
