@@ -40,11 +40,18 @@ export async function GET(req: NextRequest) {
     },
   ]
 
-  const pdfBuffer = await generateResultsPDF({
-    score, label, labelColor, headline, subline, recommendations, bonusAnswer,
-  })
+  let pdfBuffer: Buffer
+  try {
+    pdfBuffer = await generateResultsPDF({
+      score, label, labelColor, headline, subline, recommendations, bonusAnswer,
+    })
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err)
+    return NextResponse.json({ error: 'PDF generation failed', detail: msg }, { status: 500 })
+  }
 
-  await transporter.sendMail({
+  try {
+    await transporter.sendMail({
     from: `"Haus Momster" <${process.env.GMAIL_USER}>`,
     to: 'lejla@concept-district.com',
     subject: `Dein Grundriss-Check – Score ${score}/100`,
@@ -99,6 +106,11 @@ export async function GET(req: NextRequest) {
       },
     ],
   })
+
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err)
+    return NextResponse.json({ error: 'Email sending failed', detail: msg }, { status: 500 })
+  }
 
   return NextResponse.json({ ok: true, message: 'Test result email sent to lejla@concept-district.com' })
 }
