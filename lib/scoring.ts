@@ -35,12 +35,12 @@ const LABELS: Array<{
     label: { de: 'Ausgezeichnet', en: 'Excellent' },
     labelColor: '#4A7C59',
     headline: {
-      de: 'Dein Grundriss ist ausgezeichnet geplant.',
-      en: 'Your floor plan is excellently planned.',
+      de: 'Dein Grundriss ist ausgezeichnet geplant – du hast vieles richtig gemacht.',
+      en: 'Your floor plan is excellently planned – you got most things right.',
     },
     subline: {
-      de: 'Du hast die meisten typischen Planungsfehler vermieden. Die kleinen Lücken findest du unten.',
-      en: "You've avoided most typical planning errors. Find the small gaps below.",
+      de: 'Du hast die meisten typischen Planungsfehler vermieden und an die richtigen Dinge gedacht. Schau dir trotzdem die Empfehlungen unten an – oft sind es die kleinen Details, die am Ende den Unterschied zwischen einem guten und einem wirklich großartigen Grundriss machen.',
+      en: "You've avoided most typical planning errors and thought about the right things. Still, check the recommendations below – it's often the small details that make the difference between a good and a truly great floor plan.",
     },
   },
   {
@@ -48,25 +48,25 @@ const LABELS: Array<{
     label: { de: 'Gut', en: 'Good' },
     labelColor: '#7A9E7E',
     headline: {
-      de: 'Gut geplant – mit einigen Optimierungsmöglichkeiten.',
-      en: 'Well planned – with a few areas for improvement.',
+      de: 'Gut geplant – aber an einigen Stellen lohnt es sich, noch einmal genauer hinzuschauen.',
+      en: 'Well planned – but a few points deserve a closer look.',
     },
     subline: {
-      de: 'Dein Grundriss hat eine solide Basis. Ein paar Punkte solltest du aber noch prüfen.',
-      en: 'Your floor plan has a solid foundation. But a few points are still worth reviewing.',
+      de: 'Die Basis deines Grundrisses ist solide. Die Empfehlungen unten zeigen dir, wo du mit wenig Aufwand noch deutlich mehr herausholen kannst. Manche lassen sich jetzt noch leicht korrigieren – nach dem Bau kaum noch.',
+      en: 'The foundation of your floor plan is solid. The recommendations below show where you can get significantly more out of it with little effort. Some can still be easily corrected now – but rarely after construction.',
     },
   },
   {
     min: 50,
-    label: { de: 'Mittelmäßig', en: 'Moderate' },
+    label: { de: 'Verbesserungswürdig', en: 'Needs Improvement' },
     labelColor: '#C4973D',
     headline: {
-      de: 'Dein Grundriss hat einige typische Planungsfehler.',
-      en: 'Your floor plan has several typical planning errors.',
+      de: 'Dein Grundriss hat einige typische Planungsfehler – aber noch ist Zeit zum Gegensteuern.',
+      en: 'Your floor plan has several typical planning errors – but there is still time to act.',
     },
     subline: {
-      de: 'Die gute Nachricht: Die meisten lassen sich noch korrigieren. Die Empfehlungen unten helfen dir dabei.',
-      en: 'The good news: most can still be corrected. The recommendations below will help.',
+      de: 'Die gute Nachricht: Viele der genannten Punkte lassen sich in der Planungsphase noch korrigieren, ohne großen Aufwand. Geh die Empfehlungen unten sorgfältig durch – und starte mit den Punkten, die mit 0 Punkten bewertet wurden. Das sind die kritischen Stellen.',
+      en: 'The good news: many of these points can still be corrected in the planning phase without major effort. Go through the recommendations below carefully – and start with the ones that scored 0 points. Those are the critical spots.',
     },
   },
   {
@@ -74,12 +74,12 @@ const LABELS: Array<{
     label: { de: 'Kritisch', en: 'Critical' },
     labelColor: '#C4533D',
     headline: {
-      de: 'Achtung: Dein Grundriss hat kritische Planungsmängel.',
-      en: 'Warning: Your floor plan has critical planning deficiencies.',
+      de: 'Achtung: Dein Grundriss hat kritische Planungsmängel, die deinen Alltag dauerhaft beeinflussen werden.',
+      en: 'Warning: Your floor plan has critical planning deficiencies that will permanently affect your daily life.',
     },
     subline: {
-      de: 'Jetzt ist genau der richtige Zeitpunkt, um gegenzusteuern – bevor etwas gebaut wird. Lies die Empfehlungen unten sorgfältig.',
-      en: 'Now is exactly the right time to take corrective action – before anything is built. Read the recommendations below carefully.',
+      de: 'Das klingt hart – aber es ist wichtig: Was jetzt nicht korrigiert wird, ist nach dem Bau kaum noch zu ändern. Lies die Empfehlungen unten sehr sorgfältig und priorisiere die Punkte mit 0 Punkten. Dann lass uns im persönlichen Gespräch schauen, was noch möglich ist.',
+      en: 'That sounds harsh – but it matters: what is not corrected now is nearly impossible to change after construction. Read the recommendations below very carefully and prioritise the 0-point items. Then let us talk in person about what is still possible.',
     },
   },
 ]
