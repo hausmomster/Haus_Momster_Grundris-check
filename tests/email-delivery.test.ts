@@ -1,16 +1,17 @@
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 
-// ── Mocks must be declared before any imports that trigger module execution ──
-
-const mockSendMail = vi.fn().mockResolvedValue({ messageId: 'test-id' })
-const mockCreateTransport = vi.fn().mockReturnValue({ sendMail: mockSendMail })
-
-vi.mock('nodemailer', () => ({
-  default: { createTransport: mockCreateTransport },
+// vi.hoisted() runs before vi.mock() factories, making these available inside them
+const { mockSendMail, mockSaveQuizResult, mockSupabaseSelect } = vi.hoisted(() => ({
+  mockSendMail: vi.fn().mockResolvedValue({ messageId: 'test-id' }),
+  mockSaveQuizResult: vi.fn().mockResolvedValue(undefined),
+  mockSupabaseSelect: vi.fn(),
 }))
 
-const mockSaveQuizResult = vi.fn().mockResolvedValue(undefined)
-const mockSupabaseSelect = vi.fn()
+vi.mock('nodemailer', () => ({
+  default: {
+    createTransport: () => ({ sendMail: mockSendMail }),
+  },
+}))
 
 vi.mock('@/lib/supabase', () => ({
   saveQuizResult: mockSaveQuizResult,
@@ -24,9 +25,6 @@ vi.mock('@/lib/supabase', () => ({
     }),
   },
 }))
-
-// generateResultsPDF is NOT mocked – we want the real PDF generated
-// so this test also validates PDF generation does not throw.
 
 import { POST } from '../app/api/save-result/route'
 import { NextRequest } from 'next/server'
@@ -111,7 +109,6 @@ describe('POST /api/save-result', () => {
     expect(call.attachments).toHaveLength(1)
     expect(call.attachments[0].filename).toBe('grundriss-check-ergebnis.pdf')
     expect(call.attachments[0].contentType).toBe('application/pdf')
-    // verify the attachment is a real PDF (starts with %PDF)
     const pdfBuf: Buffer = call.attachments[0].content
     expect(pdfBuf.slice(0, 4).toString()).toBe('%PDF')
   })
@@ -132,8 +129,7 @@ describe('POST /api/save-result', () => {
 
   it('does not throw when bonusAnswer contains newline (the Gonca bug)', async () => {
     mockSupabaseSelect.mockResolvedValueOnce({ data: { email: 'test@example.com' } })
-    const body = { ...VALID_BODY, bonusAnswer: 'Zeile 1\nZeile 2' }
-    await expect(POST(makeRequest(body))).resolves.toBeTruthy()
+    await expect(POST(makeRequest({ ...VALID_BODY, bonusAnswer: 'Zeile 1\nZeile 2' }))).resolves.toBeTruthy()
     expect(mockSendMail).toHaveBeenCalledOnce()
   })
 
@@ -142,6 +138,6 @@ describe('POST /api/save-result', () => {
     mockSendMail.mockRejectedValueOnce(new Error('SMTP connection refused'))
     const res = await POST(makeRequest(VALID_BODY))
     const json = await res.json()
-    expect(json.ok).toBe(true) // email error should not fail the quiz save
+    expect(json.ok).toBe(true)
   })
 })

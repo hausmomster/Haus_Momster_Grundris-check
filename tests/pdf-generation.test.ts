@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { generateResultsPDF, type PDFProps } from '../lib/generate-pdf'
-import { QUESTIONS } from '../lib/questions'
+import { getQuestions } from '../lib/questions'
 
 const BASE_PROPS: PDFProps = {
   score: 75,
@@ -94,7 +94,11 @@ describe('generateResultsPDF()', () => {
 describe('generateResultsPDF() – all recommendation texts from questions.ts', () => {
   const allRecs: { questionId: number; blockTitle: string; text: string }[] = []
 
-  for (const q of QUESTIONS) {
+  const allQuestions = [...getQuestions('house'), ...getQuestions('apartment')]
+  const seen = new Set<number>()
+  for (const q of allQuestions) {
+    if (seen.has(q.id)) continue
+    seen.add(q.id)
     for (const opt of q.options) {
       if (opt.recommendation) {
         allRecs.push({ questionId: q.id, blockTitle: q.blockTitle.de, text: opt.recommendation.de })

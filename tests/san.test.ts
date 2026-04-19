@@ -62,8 +62,9 @@ describe('san() – WinAnsi sanitiser', () => {
     expect(san('a\u00B7b')).toBe('a|b')
   })
 
-  it('strips control characters (0x00–0x09)', () => {
-    expect(san('\x00\x01\x09hello')).toBe('hello')
+  it('strips control characters (0x00–0x08); tab (0x09) becomes a space', () => {
+    // \x00 and \x01 are stripped; \x09 (tab) is first converted to space by the \t rule
+    expect(san('\x00\x01\x09hello')).toBe(' hello')
   })
 
   it('strips control characters (0x0B–0x1F) but keeps 0x0A as replaced space', () => {
