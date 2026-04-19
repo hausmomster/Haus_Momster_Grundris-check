@@ -183,8 +183,8 @@ function ResultView({ result, token, onRestart }: { result: ScoreResult; token: 
           <p className="font-sans text-sm text-warm-gray leading-relaxed mb-6 max-w-sm mx-auto">
             {result.bonusAnswer
               ? t(
-                  'Du hast deine Unsicherheit benannt – das ist der beste Ausgangspunkt. Im persönlichen 1:1 schauen wir uns genau das anhand deines Grundrisses an.',
-                  "You've named your concern – that's the best starting point. In a personal 1:1 we work through it directly on your floor plan."
+                  'Ich würde dir gerne dabei helfen, um Räume zu schaffen, in denen du dich wohl fühlst.',
+                  'I would love to help you create spaces where you feel at home.'
                 )
               : t(
                   'Im persönlichen 1:1 gehe ich gezielt auf deinen Grundriss ein – konkrete Antworten, kein allgemeines Coaching.',
