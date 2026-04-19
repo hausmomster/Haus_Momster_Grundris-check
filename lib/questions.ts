@@ -354,8 +354,8 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Ohne Vorratslösung wirst du schnell Stauraum in der Küche vermissen. Eine Speisekammer oder ein Hochschranksystem ist ein Muss – plane mindestens 2–3 Hochschränke ein.',
-          en: 'Without a storage solution, you\'ll quickly miss space in the kitchen. A pantry or tall cabinet system is a must – plan at least 2–3 tall cabinets.',
+          de: 'Ohne Vorratslösung fehlt in der Küche schnell der Platz für Lebensmittel, Dosen und Vorräte. Mindestens ein dedizierter Hochschrank für Vorräte ist Pflicht – eine Speisekammer ab 60 cm Tiefe ist die komfortablere Lösung, wenn der Grundriss es erlaubt.',
+          en: 'Without a storage solution, space for food, tins and supplies quickly runs out in the kitchen. At least one dedicated tall cabinet for provisions is a must – a pantry from 60 cm depth is the more comfortable solution if the floor plan allows it.',
         },
       },
     ],
