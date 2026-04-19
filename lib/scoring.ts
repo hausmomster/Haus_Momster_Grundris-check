@@ -100,10 +100,16 @@ export function computeScore(
     const maxPoints = Math.max(...q.options.map((o) => o.points))
     rawMax += maxPoints
 
+    // Auto-skip questions not applicable to this user's situation
+    if (q.skipWhen?.(answers, propertyType)) {
+      rawTotal += maxPoints
+      continue
+    }
+
     const selected = answers[q.id]
     if (!selected) continue
 
-    // Skipped questions get full points — no penalty for non-applicable situations
+    // Manually skipped questions get full points — no penalty for non-applicable situations
     if (selected === 'skip') {
       rawTotal += maxPoints
       continue

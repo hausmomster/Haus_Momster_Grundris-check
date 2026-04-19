@@ -18,6 +18,7 @@ export type Question = {
   scorable: boolean
   skippable?: boolean
   forType?: PropertyType
+  skipWhen?: (answers: Record<number, string>, propertyType: 'house' | 'apartment') => boolean
   options?: Option[]
 }
 
@@ -574,6 +575,8 @@ export const questions: Question[] = [
     type: 'single',
     scorable: true,
     skippable: true,
+    skipWhen: (answers, propertyType) =>
+      propertyType === 'apartment' && (answers[26] === 'xs' || answers[26] === 'small'),
     options: [
       {
         value: 'under10',

@@ -331,14 +331,22 @@ function Quiz() {
     if (currentQ.type === 'text') {
       setAnswers((prev) => ({ ...prev, [currentQ.id]: textInput.trim() }))
     }
+    navigateTo(1)
+  }
+
+  function navigateTo(direction: 1 | -1) {
+    let idx = currentIndex + direction
+    while (idx > 0 && idx < totalQuestions - 1) {
+      if (!questions[idx].skipWhen?.(answers, propertyType!)) break
+      idx += direction
+    }
     setAnimKey((k) => k + 1)
-    setCurrentIndex((i) => i + 1)
+    setCurrentIndex(idx)
   }
 
   function handleBack() {
     if (currentIndex === 0) return
-    setAnimKey((k) => k + 1)
-    setCurrentIndex((i) => i - 1)
+    navigateTo(-1)
   }
 
   const canProceed =
