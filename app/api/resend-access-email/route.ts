@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import crypto from 'crypto'
 import nodemailer from 'nodemailer'
 import { supabase } from '@/lib/supabase'
 
@@ -21,20 +22,43 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Missing email param' }, { status: 400 })
   }
 
-  const { data, error } = await supabase
+  // Try to find an existing unused/active token first
+  let { data } = await supabase
     .from('access_tokens')
     .select('token')
     .eq('email', email)
     .in('status', ['unused', 'active'])
     .order('created_at', { ascending: false })
     .limit(1)
-    .single()
+    .maybeSingle()
 
-  if (error || !data) {
-    return NextResponse.json(
-      { error: 'No active token found for this email', detail: error?.message },
-      { status: 404 }
-    )
+  // If all tokens are expired, create a fresh one from the same order
+  if (!data) {
+    const { data: existing } = await supabase
+      .from('access_tokens')
+      .select('order_id')
+      .eq('email', email)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    if (!existing) {
+      return NextResponse.json({ error: 'No token found for this email' }, { status: 404 })
+    }
+
+    const newToken = crypto.randomUUID()
+    const { error: insertError } = await supabase.from('access_tokens').insert({
+      token: newToken,
+      order_id: existing.order_id,
+      email,
+      status: 'unused',
+    })
+
+    if (insertError) {
+      return NextResponse.json({ error: 'Failed to create token', detail: insertError.message }, { status: 500 })
+    }
+
+    data = { token: newToken }
   }
 
   const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? '').replace(/\/$/, '')
