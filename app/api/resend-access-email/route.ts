@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import crypto from 'crypto'
 import nodemailer from 'nodemailer'
 import { supabase } from '@/lib/supabase'
 
@@ -11,53 +10,35 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-function verifyShopifyWebhook(body: string, hmac: string): boolean {
-  const secret = process.env.SHOPIFY_WEBHOOK_SECRET!
-  const digest = crypto.createHmac('sha256', secret).update(body, 'utf8').digest('base64')
-  return crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(hmac))
-}
-
-export async function POST(req: NextRequest) {
-  const rawBody = await req.text()
-  const hmac = req.headers.get('x-shopify-hmac-sha256') ?? ''
-
-  if (!verifyShopifyWebhook(rawBody, hmac)) {
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  if (searchParams.get('secret') !== process.env.SHOPIFY_WEBHOOK_SECRET) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const order = JSON.parse(rawBody)
-  const email: string = order.email ?? order.contact_email ?? ''
-  const orderId: string = String(order.id)
-
-  // Idempotency: skip if an unused or active token already exists for this order
-  const { data: existing } = await supabase
-    .from('access_tokens')
-    .select('token')
-    .eq('order_id', orderId)
-    .in('status', ['unused', 'active'])
-    .maybeSingle()
-
-  if (existing) {
-    return NextResponse.json({ ok: true })
+  const email = searchParams.get('email')
+  if (!email) {
+    return NextResponse.json({ error: 'Missing email param' }, { status: 400 })
   }
 
-  // Generate a one-time access token
-  const token = crypto.randomUUID()
+  const { data, error } = await supabase
+    .from('access_tokens')
+    .select('token')
+    .eq('email', email)
+    .in('status', ['unused', 'active'])
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
 
-  const { error } = await supabase.from('access_tokens').insert({
-    token,
-    order_id: orderId,
-    email,
-    status: 'unused',
-  })
-
-  if (error) {
-    console.error('Supabase insert error:', error)
-    return NextResponse.json({ error: 'DB error' }, { status: 500 })
+  if (error || !data) {
+    return NextResponse.json(
+      { error: 'No active token found for this email', detail: error?.message },
+      { status: 404 }
+    )
   }
 
   const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? '').replace(/\/$/, '')
-  const toolUrl = `${appUrl}/tool?token=${token}`
+  const toolUrl = `${appUrl}/tool?token=${data.token}`
 
   try {
     await transporter.sendMail({
@@ -97,10 +78,10 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     })
-  } catch (err) {
+  } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err)
-    console.error('Shopify webhook email error for order', orderId, ':', msg)
+    return NextResponse.json({ error: 'Email sending failed', detail: msg }, { status: 500 })
   }
 
-  return NextResponse.json({ ok: true })
+  return NextResponse.json({ ok: true, message: `Access email resent to ${email}` })
 }
