@@ -29,11 +29,12 @@ export async function POST(req: NextRequest) {
   const email: string = order.email ?? order.contact_email ?? ''
   const orderId: string = String(order.id)
 
-  // Idempotency: if a token already exists for this order, don't create a duplicate
+  // Idempotency: skip if an unused or active token already exists for this order
   const { data: existing } = await supabase
     .from('access_tokens')
     .select('token')
     .eq('order_id', orderId)
+    .in('status', ['unused', 'active'])
     .maybeSingle()
 
   if (existing) {

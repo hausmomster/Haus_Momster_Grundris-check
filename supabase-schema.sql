@@ -15,6 +15,11 @@ create table if not exists access_tokens (
 -- Index for fast token lookups
 create index if not exists idx_access_tokens_token on access_tokens(token);
 
+-- Prevent duplicate active tokens per order (allows expired/completed to coexist with new ones)
+create unique index if not exists idx_access_tokens_one_active_per_order
+  on access_tokens(order_id)
+  where status in ('unused', 'active');
+
 -- No public access – only service role can read/write
 alter table access_tokens enable row level security;
 
