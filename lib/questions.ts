@@ -738,7 +738,7 @@ export const questions: Question[] = [
         points: 0,
         recommendation: {
           de: 'Schlafzimmer zur Straße bedeutet: du hörst jedes Auto, jede Bremse und morgens früh den Berufsverkehr. Das ist einer der häufigsten Komfortmängel, den man hinterher kaum noch korrigieren kann. Die Raumaufteilung sollte so sein: Schlaf- und Kinderzimmer auf die ruhige Seite (Hof, Garten, Seitenstraße), Küche und Wohnzimmer zur Straße. Falls das nicht mehr geht: Bessere Fenster kosten ca. 1.000 Euro pro Stück und helfen deutlich.',
-          en: 'Bedrooms facing the street is one of the most common comfort problems in city apartments - and one of the hardest to fix afterwards. The layout should be: bedrooms and children's rooms on the quiet side, kitchen and living room towards the street. If that is no longer possible: triple glazing costs 800 to 1,500 EUR per window and makes a real difference.',
+          en: "Bedroom facing the street means: you hear every car, every brake and the morning rush hour every day. This is one of the most common comfort problems and almost impossible to fix later. The layout should be: bedrooms and children's rooms on the quiet side (courtyard, garden, side street), kitchen and living room towards the street. If that is no longer possible: better-insulated windows cost around 1,000 EUR per window and help a lot.",
         },
       },
     ],
