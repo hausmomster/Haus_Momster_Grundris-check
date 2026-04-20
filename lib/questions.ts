@@ -274,8 +274,8 @@ export const questions: Question[] = [
         label: { de: 'Unsicher', en: 'Unsure' },
         points: 4,
         recommendation: {
-          de: 'Erstelle einen Möblierungsplan - kostenlos mit roomsketcher.com oder floorplanner.com. Zeichne alle Möbel maßstabsgerecht ein und miss dann alle verbleibenden Wege nach. Besonders kritisch: Weg zwischen Esstisch und Wand (mindestens 90 cm, damit du den Stuhl ausziehen und noch durchgehen kannst), Gang hinter dem Sofa (mindestens 60 cm), Abstand neben dem Bett (mindestens 60 cm, besser 80 cm). Engstellen lassen sich oft durch kleinere Möbel oder wandmontierte Lösungen beheben.',
-          en: 'Create a furniture plan - free tools: roomsketcher.com or floorplanner.com. Draw all furniture to scale and measure the remaining gaps. Most critical: the path between the dining table and the wall (at least 90 cm so you can pull out a chair and still walk past), the gap behind the sofa (at least 60 cm), clearance beside the bed (at least 60 cm, better 80 cm). Bottlenecks can often be fixed by choosing smaller furniture or wall-mounted solutions.',
+          de: 'Erstelle einen Möblierungsplan - kostenlos mit roomsketcher.com oder floorplanner.com. Zeichne alle Möbel maßstabsgerecht ein und miss dann alle verbleibenden Wege nach. Besonders kritisch: Weg zwischen Esstisch und Wand (mindestens 1 m, damit du den Stuhl ausziehen und noch durchgehen kannst), Gang hinter dem Sofa (mindestens 60 cm), Abstand neben dem Bett (mindestens 60 cm, besser 80 cm). Engstellen lassen sich oft durch kleinere Möbel oder wandmontierte Lösungen beheben.',
+          en: 'Create a furniture plan - free tools: roomsketcher.com or floorplanner.com. Draw all furniture to scale and measure the remaining gaps. Most critical: the path between the dining table and the wall (at least 1 m so you can pull out a chair and still walk past), the gap behind the sofa (at least 60 cm), clearance beside the bed (at least 60 cm, better 80 cm). Bottlenecks can often be fixed by choosing smaller furniture or wall-mounted solutions.',
         },
       },
       {
