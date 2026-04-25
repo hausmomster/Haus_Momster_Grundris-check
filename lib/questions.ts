@@ -187,8 +187,8 @@ export const questions: Question[] = [
         label: { de: 'Unter 90 cm', en: 'Under 90 cm' },
         points: 0,
         recommendation: {
-          de: 'Unter 90 cm Breite bekommst du kaum mehr Sofa, Kühlschrank oder Waschmaschine durch - und zwei Personen können nicht aneinander vorbeigehen. Das ist zu eng für den Alltag. Prüfe ob eine nicht tragende Wand an der engsten Stelle verschoben werden kann - im Rohbau kostet das 500 bis 2.000 Euro, hinterher 3.000 bis 10.000 Euro. Eine Schiebetür statt Drehtür kann zusätzlich 5 bis 10 cm zurückgewinnen.',
-          en: 'Below 90 cm you can barely move a sofa, fridge or washing machine through - and two people cannot pass each other. That is too tight for everyday life. Check whether a non-load-bearing wall at the narrowest point can be shifted - in shell construction this costs 500 to 2,000 EUR, afterwards 3,000 to 10,000 EUR. A sliding door instead of a hinged door can also reclaim 5 to 10 cm.',
+          de: 'Unter 90 cm Breite bekommst du kaum mehr Sofa, Kühlschrank oder Waschmaschine durch - und zwei Personen können nicht aneinander vorbeigehen. Das ist zu eng für den Alltag. Noch nicht gebaut: Prüfe ob eine nicht tragende Wand an der engsten Stelle verschoben werden kann - das kostet im Rohbau 500 bis 2.000 Euro. Haus steht bereits: Ersetze Drehtüren durch Schiebetüren - das gewinnt 5 bis 10 cm zurück. Keine Schränke im Flur, stattdessen Haken und wandmontierte Regale.',
+          en: 'Below 90 cm you can barely move a sofa, fridge or washing machine through - and two people cannot pass each other. That is too tight for everyday life. Not yet built: check whether a non-load-bearing wall at the narrowest point can be shifted - costs 500 to 2,000 EUR in shell construction. Already built: replace hinged doors with sliding doors - that reclaims 5 to 10 cm. No freestanding furniture in the hallway - use wall-mounted hooks and shelves instead.',
         },
       },
       {
@@ -196,8 +196,8 @@ export const questions: Question[] = [
         label: { de: '90–110 cm', en: '90–110 cm' },
         points: 5,
         recommendation: {
-          de: 'Es reicht, aber es ist eng: bei 90 bis 110 cm passt eine Person problemlos durch, zwei müssen ausweichen. Wenn du noch in der Planungsphase bist: Versuch auf 110 cm zu kommen. Eine nicht tragende Wand um 10 cm zu verschieben kostet im Rohbau oft unter 1.000 Euro - nach Fertigstellung 3.000 bis 8.000 Euro. Der Unterschied ist klein auf dem Papier, aber täglich spürbar.',
-          en: 'It works but it is tight: at 90 to 110 cm one person passes easily, two have to squeeze past each other. If you are still in the planning stage: aim for 110 cm. Shifting a non-load-bearing wall by 10 cm costs under 1,000 EUR in shell construction - after completion 3,000 to 8,000 EUR. A small change on paper, but noticeable every single day.',
+          de: 'Es reicht, aber es ist eng: bei 90 bis 110 cm passt eine Person problemlos durch, zwei müssen ausweichen. Noch nicht gebaut: Versuch auf 110 cm zu kommen - eine nicht tragende Wand um 10 cm zu verschieben kostet im Rohbau oft unter 1.000 Euro. Haus steht bereits: Eine Schiebetür statt Drehtür schafft sofort mehr Spielraum. Möbel im Flur auf das absolute Minimum reduzieren.',
+          en: 'It works but it is tight: at 90 to 110 cm one person passes easily, two have to squeeze past each other. Not yet built: aim for 110 cm - shifting a non-load-bearing wall by 10 cm often costs under 1,000 EUR in shell construction. Already built: replace a hinged door with a sliding door for immediate improvement. Keep hallway furniture to an absolute minimum.',
         },
       },
       { value: 'over110', label: { de: 'Über 110 cm', en: 'Over 110 cm' }, points: 8 },
@@ -239,8 +239,8 @@ export const questions: Question[] = [
         label: { de: '80–90 cm', en: '80–90 cm' },
         points: 0,
         recommendation: {
-          de: 'Ausreichend für Nebenwege. Wenn du noch in der Planungsphase bist: prüfe ob 90 cm möglich sind - das merkt man besonders mit Wäschekörben oder wenn Kinder größer werden. Schiebetür statt Drehtür kann hier noch extra Platz schaffen.',
-          en: 'Fine for secondary routes. If you are still in the planning phase: check whether 90 cm is possible - you will notice the difference when carrying laundry or as children grow. A sliding door instead of a hinged door can reclaim extra space here.',
+          de: 'Ausreichend für Nebenwege. Noch nicht gebaut: Prüfe ob 90 cm möglich sind - das merkt man besonders mit Wäschekörben oder wenn Kinder größer werden. Haus steht bereits: Eine Schiebetür statt Drehtür ist oft die einfachste Lösung, hier mehr Platz zu gewinnen.',
+          en: 'Fine for secondary routes. Not yet built: check whether 90 cm is possible - you will notice the difference when carrying laundry or as children grow. Already built: replacing a hinged door with a sliding door is often the easiest way to gain space here.',
         },
       },
       { value: 'over90', label: { de: 'Über 90 cm', en: 'Over 90 cm' }, points: 0 },
@@ -283,8 +283,8 @@ export const questions: Question[] = [
         label: { de: 'Ja', en: 'Yes' },
         points: 0,
         recommendation: {
-          de: 'Notiere jede Engstelle und prüfe für jede: Kann das Möbelstück kleiner sein oder an die Wand montiert werden? Kann die Tür anders aufgehen oder durch eine Schiebetür ersetzt werden - das spart 5 bis 10 cm? Kann eine nicht tragende Wand minimal verschoben werden? Im Rohbau kostet das 500 bis 2.000 Euro, nach dem Einzug 5.000 bis 15.000 Euro. Je früher du handelst, desto günstiger.',
-          en: 'Note every bottleneck and check for each one: Can the furniture be smaller or wall-mounted? Can the door open the other way or be replaced by a sliding door - saving 5 to 10 cm? Can a non-load-bearing wall be shifted slightly? In shell construction this costs 500 to 2,000 EUR, after completion 5,000 to 15,000 EUR. The earlier you act, the cheaper.',
+          de: 'Notiere jede Engstelle und prüfe für jede: Kann das Möbelstück kleiner sein oder an die Wand montiert werden? Kann die Tür anders aufgehen oder durch eine Schiebetür ersetzt werden - das spart 5 bis 10 cm? Noch nicht gebaut: Eine nicht tragende Wand minimal verschieben kostet im Rohbau 500 bis 2.000 Euro. Haus steht bereits: Konzentriere dich auf kleinere Möbel, wandmontierte Regale und Schiebetüren - das sind die Optionen ohne großen Umbau.',
+          en: 'Note every bottleneck and check for each one: can the furniture be smaller or wall-mounted? Can the door open the other way or be replaced by a sliding door - saving 5 to 10 cm? Not yet built: a non-load-bearing wall can be shifted slightly for 500 to 2,000 EUR in shell construction. Already built: focus on smaller furniture, wall-mounted storage and sliding doors - these are your options without major renovation.',
         },
       },
     ],
@@ -344,8 +344,8 @@ export const questions: Question[] = [
         label: { de: 'Unter 100 cm', en: 'Under 100 cm' },
         points: 0,
         recommendation: {
-          de: 'Unter 100 cm zwischen Insel und Küchenzeile kannst du weder Backofentür noch Schubladen öffnen, ohne dass die andere Person im Weg steht. Die Insel muss kleiner oder verschoben werden - vor dem Kücheneinbau kostenlos, danach 2.000 bis 8.000 Euro. Das ist einer der Fehler, den man nicht durch Gewöhnung löst.',
-          en: "Below 100 cm between the island and the counter line, you cannot open the oven door or drawers without the other person being in the way. The island needs to be smaller or moved - free before kitchen installation, 2,000 to 8,000 EUR afterwards. This is one of those mistakes you cannot get used to.",
+          de: 'Unter 100 cm zwischen Insel und Küchenzeile kannst du weder Backofentür noch Schubladen öffnen, ohne dass die andere Person im Weg steht. Noch nicht gebaut: Die Insel muss kleiner oder verschoben werden - vor dem Kücheneinbau kostenlos. Haus steht bereits: Ersetze die feste Insel durch einen fahrbaren Küchenwagen - kostet 300 bis 800 Euro und lässt sich wegschieben wenn Platz gebraucht wird.',
+          en: "Below 100 cm between the island and the counter line, you cannot open the oven door or drawers without the other person being in the way. Not yet built: the island needs to be smaller or moved - free before kitchen installation. Already built: replace the fixed island with a mobile kitchen trolley - costs 300 to 800 EUR and can be moved out of the way when space is needed.",
         },
       },
       {
@@ -353,8 +353,8 @@ export const questions: Question[] = [
         label: { de: '100–115 cm', en: '100–115 cm' },
         points: 6,
         recommendation: {
-          de: "Du kommst gerade so durch, aber zu zweit in der Küche wird es eng. Ziel sind 120 cm - damit können beide aneinander vorbeigehen ohne sich zu berühren. Wenn noch möglich: Insel um einige Zentimeter kürzen oder die Küchenzeile leicht anpassen. Vor dem Einbau kostenlos, danach 1.500 bis 4.000 Euro.",
-          en: "You can just about manage, but two people in the kitchen will be in each other's way. Aim for 120 cm - then both people can pass without touching. If still possible: shorten the island or counter by a few centimetres. Free before installation, 1,500 to 4,000 EUR afterwards.",
+          de: "Du kommst gerade so durch, aber zu zweit in der Küche wird es eng. Ziel sind 120 cm - damit können beide aneinander vorbeigehen ohne sich zu berühren. Noch nicht gebaut: Insel um einige Zentimeter kürzen oder die Küchenzeile leicht anpassen - vor dem Einbau kostenlos. Haus steht bereits: Das ist ohne Umbau kaum zu korrigieren. Hilft am meisten: eine klare Absprache wer wann kocht, und die weniger benutzten Seiten der Küche konsequent freihalten.",
+          en: "You can just about manage, but two people in the kitchen will be in each other's way. Aim for 120 cm - then both people can pass without touching. Not yet built: shorten the island or counter by a few centimetres - free before installation. Already built: this is hard to fix without renovation. Most helpful: agree on who cooks when, and consistently keep the less-used side of the kitchen clear.",
         },
       },
       { value: 'ab120', label: { de: 'Über 120 cm', en: 'Over 120 cm' }, points: 8 },
@@ -387,8 +387,8 @@ export const questions: Question[] = [
         label: { de: 'Noch unsicher', en: 'Not yet sure' },
         points: 2,
         recommendation: {
-          de: 'Plane das jetzt konkret: Das Minimum ist ein 60 cm tiefer, 80 cm breiter Hochschrank nur für Vorräte. Noch besser ist eine kleine begehbare Nische - 80 cm breit, 60 cm tief, mit Schiebetür. Die kostet kaum mehr als ein Schrank, ist aber viel zugänglicher. Ohne Vorratsraum verdrängen Lebensmittel die Töpfe aus den Schränken - und nach ein paar Monaten liegt alles auf der Arbeitsfläche.',
-          en: 'Plan this now: the minimum is a 60 cm deep, 80 cm wide tall cabinet exclusively for food. Even better: a small walk-in niche - 80 cm wide, 60 cm deep, with a sliding door. Barely more expensive than a cabinet but much more accessible. Without any pantry, food starts competing with pots and pans for space - and within months things end up on the worktop.',
+          de: 'Das Minimum ist ein 60 cm tiefer, 80 cm breiter Hochschrank nur für Vorräte - besser eine kleine Nische mit Schiebetür. Noch nicht gebaut: Das jetzt konkret einplanen, solange die Wände noch nicht stehen - eine Nische kostet kaum mehr als ein Schrank. Haus steht bereits: Suche eine Nische in Küchennähe, mindestens 60×60 cm, und nutze die volle Raumhöhe mit Regalen bis zur Decke. Das schafft fast so viel Stauraum wie ein echter Vorratsraum - ohne Umbau.',
+          en: 'The minimum is a 60 cm deep, 80 cm wide tall cabinet exclusively for food - better a small niche with a sliding door. Not yet built: plan this in now while the walls are not yet up - a niche barely costs more than a cabinet. Already built: find a niche near the kitchen, at least 60×60 cm, and use the full ceiling height with shelves. That creates almost as much storage as a real pantry - without any building work.',
         },
       },
       {
@@ -396,8 +396,8 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Ohne Vorratsraum wandert das Essen auf die Arbeitsfläche. Das klingt harmlos, aber es passiert schnell und dann dauerhaft. Das Minimum: ein Hochschrank nur für Vorräte. Besser: 1 bis 2 m² Nische in der Nähe der Küche, die du jetzt noch einplanen kannst. Im Rohbau kostet das fast nichts - hinterher 3.000 bis 15.000 Euro.',
-          en: 'Without pantry storage, food ends up on the worktop. It sounds minor but it happens fast and stays that way. The minimum: one tall cabinet just for food. Better: 1 to 2 m² niche near the kitchen, which you can still add now. In shell construction this costs almost nothing - afterwards 3,000 to 15,000 EUR.',
+          de: 'Ohne Vorratsraum wandert das Essen auf die Arbeitsfläche. Das klingt harmlos, aber es passiert schnell und dann dauerhaft. Noch nicht gebaut: Eine Nische von 80×60 cm neben der Küche einplanen - im Rohbau kostet das fast nichts. Haus steht bereits: Suche eine Nische in Küchennähe, mindestens 60×60 cm, und nutze die volle Raumhöhe mit Regalen bis zur Decke. Ein Hochregal mit Tür in einer Ecke schafft ohne Umbau fast so viel Stauraum wie ein echter Vorratsraum.',
+          en: 'Without pantry storage, food ends up on the worktop. It sounds minor but it happens fast and stays that way. Not yet built: add a niche of 80×60 cm next to the kitchen - in shell construction this costs almost nothing. Already built: find a niche near the kitchen, at least 60×60 cm, and use the full ceiling height with shelves. A tall cabinet with a door in a corner creates almost as much storage as a real pantry - without any building work.',
         },
       },
     ],
@@ -488,8 +488,8 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Freistehende Schränke verlieren durch Sockel, Oberteil und Seitenwände rund 15 bis 20 % ihres nutzbaren Platzes im Vergleich zu Einbauten. Schau jetzt welche Nischen, Wandbereiche zwischen Fenstern und Dachschrägenbereiche du einplanen kannst - das sind die besten Stellen und jetzt noch kostenlos zu ändern.',
-          en: 'Freestanding wardrobes lose around 15 to 20% of their usable space compared to built-ins, due to legs, top panels and side walls. Look now at which niches, wall sections between windows and roof slope areas you can use for built-ins - these spots are ideal and still free to change at this stage.',
+          de: 'Freistehende Schränke verlieren durch Sockel, Oberteil und Seitenwände rund 15 bis 20 % ihres nutzbaren Platzes im Vergleich zu Einbauten. Noch nicht gebaut: Jetzt einplanen welche Nischen, Wandbereiche zwischen Fenstern und Dachschrägenbereiche du für Einbauten nutzen kannst - das kostet jetzt nichts extra. Haus steht bereits: Ein Schreiner kann auch nachträglich jeden Zwischenraum und jede Nische als Einbauschrank nutzen - kostet 1.500 bis 4.000 Euro, gibt aber deutlich mehr Stauraum als ein Standardschrank.',
+          en: 'Freestanding wardrobes lose around 15 to 20% of their usable space compared to built-ins, due to legs, top panels and side walls. Not yet built: plan now which niches, wall sections between windows and roof slope areas you can use for built-ins - free to incorporate at this stage. Already built: a carpenter can fit a built-in wardrobe into any niche or gap afterwards - costs 1,500 to 4,000 EUR but gives significantly more storage than a standard wardrobe.',
         },
       },
     ],
@@ -556,8 +556,8 @@ export const questions: Question[] = [
         label: { de: 'Nein', en: 'No' },
         points: 0,
         recommendation: {
-          de: 'Jede Wand mit Fenster verliert Stellfläche. Wenn in einem Raum mehr als die Hälfte aller Wände durch Fenster oder Türen unterbrochen sind, lässt sich der Raum kaum noch möblieren. Lösung: Fenster höher setzen (Brüstung auf mindestens 85 cm), schmaler machen oder verschieben. Erst festlegen wo die Möbel stehen, dann die Fenster planen - nicht umgekehrt.',
-          en: 'Every wall with a window loses furniture space. If more than half of all walls in a room are broken up by windows or doors, the room becomes nearly impossible to furnish. Fix: raise the windows higher (sill to at least 85 cm), make them narrower, or move them. First decide where the furniture goes, then plan the windows - not the other way round.',
+          de: 'Jede Wand mit Fenster verliert Stellfläche. Wenn in einem Raum mehr als die Hälfte aller Wände durch Fenster oder Türen unterbrochen sind, lässt sich der Raum kaum noch möblieren. Noch nicht gebaut: Fenster höher setzen (Brüstung auf mindestens 85 cm), schmaler machen oder verschieben. Erst festlegen wo die Möbel stehen, dann die Fenster planen - nicht umgekehrt. Haus steht bereits: Wähle schlanke Möbel die vor Fensterbrüstungen passen, nutze Fensterwände mit niedrigen Sideboards. Raumhohe Regale an die freien Wände holen verlorene Stellfläche zurück.',
+          en: 'Every wall with a window loses furniture space. If more than half of all walls in a room are broken up by windows or doors, the room becomes nearly impossible to furnish. Not yet built: raise the windows higher (sill to at least 85 cm), make them narrower or move them - decide where furniture goes first, then plan the windows. Already built: choose slim furniture that fits below the window sills, use low sideboards along window walls. Floor-to-ceiling shelving on the few free walls makes up for the lost space.',
         },
       },
     ],
@@ -584,8 +584,8 @@ export const questions: Question[] = [
         label: { de: 'Unter 10 m²', en: 'Under 10 m²' },
         points: 0,
         recommendation: {
-          de: 'Unter 10 m² passen Bett, Schrank und Schreibtisch hinein - und das war es. Kein Platz zum Spielen, kein Platz zum Wachsen. Das Minimum für ein wirklich nutzbares Zimmer sind 12 m². Prüfe ob eine nicht tragende Wand um 30 bis 50 cm verschoben werden kann - das kostet im Rohbau oft unter 2.000 Euro und macht aus einem 10-m²-Zimmer ein vollwertiges 12-m²-Zimmer.',
-          en: "Below 10 m² you can fit a bed, wardrobe and desk - and that is it. No space to play, no room to grow. You need at least 12 m² for a room that actually works. Check whether a non-load-bearing wall can be shifted by 30 to 50 cm - often under 2,000 EUR in shell construction, and it turns a 10 m² room into a fully usable 12 m².",
+          de: 'Unter 10 m² passen Bett, Schrank und Schreibtisch hinein - und das war es. Kein Platz zum Spielen, kein Platz zum Wachsen. Noch nicht gebaut: Prüfe ob eine nicht tragende Wand um 30 bis 50 cm verschoben werden kann - das kostet im Rohbau oft unter 2.000 Euro und macht aus einem 10-m²-Zimmer ein vollwertiges 12-m²-Zimmer. Haus steht bereits: Ein Hochbett schafft sofort Spielfläche darunter. Wandregale statt Standregale. Ein Klapptisch an der Wand spart 1 bis 2 m² im Alltag. Mit guten Möbeln ist ein 10-m²-Zimmer für ein Kind durchaus nutzbar.',
+          en: "Below 10 m² you can fit a bed, wardrobe and desk - and that is it. No space to play, no room to grow. Not yet built: check whether a non-load-bearing wall can be shifted by 30 to 50 cm - often under 2,000 EUR in shell construction, and it turns a 10 m² room into a fully usable 12 m². Already built: a loft bed immediately creates play space underneath. Wall-mounted shelves instead of freestanding ones. A fold-away desk saves 1 to 2 m² in daily use. With smart furniture a 10 m² room can work well for one child.",
         },
       },
       {
@@ -658,8 +658,8 @@ export const questions: Question[] = [
         label: { de: 'Nur über Umwege oder andere Räume', en: 'Only via detour or other rooms' },
         points: 2,
         recommendation: {
-          de: 'Gut, dass es eine Terrasse gibt - aber der Weg dorthin sollte direkt vom Essbereich gehen. Von dort nutzt du sie am häufigsten, und Innen und Außen fühlen sich wie ein Raum an. Eine Terrassentür nachrüsten kostet in einer nicht tragenden Außenwand 2.000 bis 5.000 Euro, in einer tragenden Wand 5.000 bis 15.000 Euro.',
-          en: 'Good that there is outdoor space - but the access should come directly from the dining area. That is where you use it most and it makes inside and outside feel connected. Adding a terrace door costs 2,000 to 5,000 EUR in a non-load-bearing exterior wall, 5,000 to 15,000 EUR in a load-bearing wall.',
+          de: 'Gut, dass es eine Terrasse gibt - aber der Weg dorthin sollte direkt vom Essbereich gehen. Von dort nutzt du sie am häufigsten, und Innen und Außen fühlen sich wie ein Raum an. Noch nicht gebaut: Terrassentür vom Essbereich jetzt einplanen - kostet nichts extra. Haus steht bereits: Eine Tür in einer nicht tragenden Außenwand kostet 2.000 bis 5.000 Euro - lohnt sich wenn du die Terrasse wirklich oft nutzen willst. Sonst: Den Innenweg mit offenstehenden Türen und guten Schiebetüren so direkt wie möglich gestalten.',
+          en: 'Good that there is outdoor space - but the access should come directly from the dining area. That is where you use it most and it makes inside and outside feel connected. Not yet built: plan a terrace door from the dining area now - no extra cost. Already built: adding a door in a non-load-bearing exterior wall costs 2,000 to 5,000 EUR - worthwhile if you plan to use the terrace regularly. Otherwise: make the indoor route as direct as possible with open doors and good sliding door systems.',
         },
       },
       {
@@ -667,8 +667,8 @@ export const questions: Question[] = [
         label: { de: 'Kein Außenbereich geplant', en: 'No outdoor area planned' },
         points: 0,
         recommendation: {
-          de: 'Eine Terrasse ist kein Luxus - sie ist verlängerter Wohnraum, besonders im Sommer. Mindestens 10 m² sollten es sein, damit ein Tisch für vier Personen plus Bewegungsraum darum herum passt. Eine Betonterrasse kostet 80 bis 150 Euro pro m², Holz 100 bis 200 Euro pro m². Prüfe jetzt ob du noch eine Terrassentür einplanen kannst.',
-          en: 'A terrace is not a luxury - it is extra living space, especially in summer. You need at least 10 m² for a table for four people plus room to move around it. A concrete terrace costs 80 to 150 EUR per m², timber 100 to 200 EUR per m². Check now whether you can still add a terrace door to the plan.',
+          de: 'Eine Terrasse ist kein Luxus - sie ist verlängerter Wohnraum, besonders im Sommer. Mindestens 10 m² sollten es sein, damit ein Tisch für vier Personen plus Bewegungsraum passt. Noch nicht gebaut: Jetzt einplanen - Beton kostet 80 bis 150 Euro pro m², Holz 100 bis 200 Euro pro m². Haus steht bereits: Eine Terrasse lässt sich nachträglich anlegen wenn es schon eine Tür nach draußen gibt - das ist meist ohne großen Aufwand möglich. Gibt es keine Tür zur richtigen Seite, kostet der Umbau 2.000 bis 5.000 Euro.',
+          en: 'A terrace is not a luxury - it is extra living space, especially in summer. You need at least 10 m² for a table for four people plus room to move around it. Not yet built: plan it in now - concrete costs 80 to 150 EUR per m², timber 100 to 200 EUR per m². Already built: a terrace can be added afterwards if there is already a door facing the right direction - usually straightforward. If there is no door on the right side, adding one costs 2,000 to 5,000 EUR.',
         },
       },
     ],
@@ -701,8 +701,8 @@ export const questions: Question[] = [
         label: { de: 'Nein, nicht geplant', en: 'No, not planned' },
         points: 0,
         recommendation: {
-          de: 'Ohne klaren Technikraum muss der Heizungsbauer zwischen deinen Möbeln arbeiten - das ist teurer und verleitet dazu, Wartungen aufzuschieben. Plane 4 m² ein, direkt zugänglich vom Flur oder Nebeneingang, nicht durch Wohnräume. Nachträglich diesen Raum zu schaffen kostet 8.000 bis 25.000 Euro.',
-          en: 'Without a dedicated technical room, the heating engineer has to work between your furniture - that costs more and makes it tempting to delay servicing. Plan 4 m², directly accessible from the hallway or side entrance, not through living areas. Adding this room retrospectively costs 8,000 to 25,000 EUR.',
+          de: 'Ohne klaren Technikraum muss der Heizungsbauer zwischen deinen Möbeln arbeiten - das ist teurer und verleitet dazu, Wartungen aufzuschieben. Noch nicht gebaut: Plane 4 m² ein, direkt zugänglich vom Flur oder Nebeneingang, nicht durch Wohnräume. Haus steht bereits: Richte eine feste Ecke für Heizung und Sicherungskasten ein - kein Möbel davor, mindestens 1,20 m Abstand zur Heizung freilassen. Eine Abtrennung durch einen Schrank oder eine Vorhangschiene reduziert den Betriebslärm.',
+          en: 'Without a dedicated technical room, the heating engineer has to work between your furniture - that costs more and makes it tempting to delay servicing. Not yet built: plan 4 m², directly accessible from the hallway or side entrance, not through living areas. Already built: designate a fixed corner for the heating and fuse box - no furniture in front, keep at least 1.20 m clear in front of the heating unit. A partition shelf unit or a curtain rail reduces the operating noise.',
         },
       },
     ],
