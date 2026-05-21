@@ -42,14 +42,21 @@ export async function GET(req: NextRequest) {
       .limit(1)
       .maybeSingle()
 
-    if (!existing) {
-      return NextResponse.json({ error: 'No token found for this email' }, { status: 404 })
+    // If no token exists at all (e.g. DB was down when webhook fired),
+    // an explicit order_id param is required to create one from scratch
+    const orderId = existing?.order_id ?? searchParams.get('order_id')
+
+    if (!orderId) {
+      return NextResponse.json(
+        { error: 'No token found for this email. Provide order_id param to create one.' },
+        { status: 404 }
+      )
     }
 
     const newToken = crypto.randomUUID()
     const { error: insertError } = await supabase.from('access_tokens').insert({
       token: newToken,
-      order_id: existing.order_id,
+      order_id: orderId,
       email,
       status: 'unused',
     })
