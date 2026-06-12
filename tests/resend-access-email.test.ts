@@ -127,4 +127,16 @@ describe('GET /api/resend-access-email', () => {
     const res = await GET(makeRequest({ secret: SECRET, email: 'test@example.com' }))
     expect(res.status).toBe(500)
   })
+
+  it('delivers to send_to instead of email when provided, while looking up by email', async () => {
+    mockMaybeSingle.mockResolvedValueOnce({ data: { token: 'tok_abc123' } })
+    const res = await GET(
+      makeRequest({ secret: SECRET, email: 'old@example.com', send_to: 'new@example.com' })
+    )
+    const json = await res.json()
+    expect(json.ok).toBe(true)
+    expect(json.message).toContain('new@example.com')
+    const call = (mockSendMail as Mock).mock.calls[0][0]
+    expect(call.to).toBe('new@example.com')
+  })
 })

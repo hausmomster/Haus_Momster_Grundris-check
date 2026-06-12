@@ -22,6 +22,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Missing email param' }, { status: 400 })
   }
 
+  // Allows delivering the access link to a different inbox than the one
+  // stored on the order (e.g. the customer can't access their original address).
+  const sendTo = searchParams.get('send_to') || email
+
   // Try to find an existing unused/active token first
   let { data } = await supabase
     .from('access_tokens')
@@ -74,7 +78,7 @@ export async function GET(req: NextRequest) {
   try {
     await transporter.sendMail({
       from: `"Haus Momster" <${process.env.GMAIL_USER}>`,
-      to: email,
+      to: sendTo,
       subject: 'Dein Grundriss-Check ist bereit ✓',
       html: `
         <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2C2C2C;">
@@ -114,5 +118,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Email sending failed', detail: msg }, { status: 500 })
   }
 
-  return NextResponse.json({ ok: true, message: `Access email resent to ${email}` })
+  return NextResponse.json({ ok: true, message: `Access email resent to ${sendTo}` })
 }
