@@ -17,6 +17,24 @@ function verifyShopifyWebhook(body: string, hmac: string): boolean {
   return crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(hmac))
 }
 
+// Notify the shop owner when an order can't be turned into an access email,
+// so it can be fixed via /api/resend-access-email instead of going unnoticed.
+async function sendAlertEmail(subject: string, text: string) {
+  const alertTo = process.env.ALERT_EMAIL || process.env.GMAIL_USER
+  if (!alertTo) return
+
+  try {
+    await transporter.sendMail({
+      from: `"Haus Momster Alerts" <${process.env.GMAIL_USER}>`,
+      to: alertTo,
+      subject,
+      text,
+    })
+  } catch (err) {
+    console.error('Failed to send alert email:', err instanceof Error ? err.message : String(err))
+  }
+}
+
 export async function POST(req: NextRequest) {
   const rawBody = await req.text()
   const hmac = req.headers.get('x-shopify-hmac-sha256') ?? ''
@@ -53,6 +71,13 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     console.error('Supabase insert error:', error)
+    await sendAlertEmail(
+      `⚠️ Grundriss-Check: Token-Erstellung fehlgeschlagen (Order ${orderId})`,
+      `Für die Bestellung ${orderId} (${email}) konnte kein Zugangstoken in der Datenbank gespeichert werden.\n\n` +
+        `Fehler: ${error.message}\n\n` +
+        `Die Kundin/der Kunde hat KEINE E-Mail erhalten. Sobald die Datenbank wieder erreichbar ist, kannst du das Token nachträglich erstellen über:\n` +
+        `/api/resend-access-email?secret=...&email=${email}&order_id=${orderId}`
+    )
     return NextResponse.json({ error: 'DB error' }, { status: 500 })
   }
 
@@ -100,6 +125,13 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Shopify webhook email error for order', orderId, ':', msg)
+    await sendAlertEmail(
+      `⚠️ Grundriss-Check: Zugangs-E-Mail nicht zugestellt (Order ${orderId})`,
+      `Das Zugangstoken für Bestellung ${orderId} (${email}) wurde gespeichert, aber der Versand der E-Mail ist fehlgeschlagen.\n\n` +
+        `Fehler: ${msg}\n\n` +
+        `Du kannst die E-Mail erneut senden über:\n` +
+        `/api/resend-access-email?secret=...&email=${email}`
+    )
   }
 
   return NextResponse.json({ ok: true })
